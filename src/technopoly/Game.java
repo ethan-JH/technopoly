@@ -151,26 +151,28 @@ public class Game {
     public void generateBoard() {
         board = new Board();
         ArrayList<Square> squares = new ArrayList<Square>();
-        // change these names when we get our fields
-        //move to board?
-        String[] squareNames = {"Square_1", "Square_2", "Square 3", "Square 4", "Square 5", "Square 6", "Square 7",
-                "Square 8", "Square 9", "Square 10"};
-
-        squares.add(new Square("Go", 1, 0,"N/A"));
-        squares.add(new Square("Free Parking", 6, 0, "N/A"));
-
-        for (int i = 0; i < 2; i++) {
-            squares.add(new Square(squareNames[i], (i + 1), 50, "Field1"));
-        }
-        for (int i = 2; i < 5; i++) {
-            squares.add(new Square(squareNames[i], (i + 1), 100, "Field2"));
-        }
-        for (int i = 5; i < 8; i++) {
-            squares.add(new Square(squareNames[i], (i + 1), 150, "Field3"));
-        }
-        for (int i = 8; i < 10; i++) {
-            squares.add(new Square(squareNames[i], (i + 1), 200, "Field4"));
-        }
+        //currently 'value' is used to store both the cost to purchase and the amount someone gains/loses
+        //from stopping there - change?
+        squares.add(new Square("Funding Round", 1, 200,"N/A"));
+        squares.add(new Square("Netflix", 2, 60, "Streaming"));
+        squares.add(new Square("TechCoin Mine", 3, 150, "N/A"));
+        squares.add(new Square("Hulu", 4, 60, "Streaming"));
+        squares.add(new Square("Digital Tax", 5, 70, "N/A"));
+        squares.add(new Square("Chance", 6, 0, "N/A"));
+        squares.add(new Square("eBay", 7, 140, "eCommerce"));
+        squares.add(new Square("Data Centre", 8, 140, "N/A"));
+        squares.add(new Square("Alibaba", 9, 140, "eCommerce"));
+        squares.add(new Square("Amazon", 10, 160, "eCommerce"));
+        squares.add(new Square("Holiday", 11, 0, "N/A"));
+        squares.add(new Square("Twitter", 12, 260, "Social Media"));
+        squares.add(new Square("Instagram", 13, 140, "Social Media"));
+        squares.add(new Square("Techcoin Mine", 14, 150, "N/A"));
+        squares.add(new Square("Facebook", 15, 140, "Social Media"));
+        squares.add(new Square("Chance", 16, 140, "N/A"));
+        squares.add(new Square("Hacked", 17, 200, "N/A"));
+        squares.add(new Square("Apple", 18, 350, "Software Giant"));
+        squares.add(new Square("Data Centre", 19, 140, "N/A"));
+        squares.add(new Square("Microsoft", 20, 400, "Software giant"));
         board.setSquares(squares);
 
     }
