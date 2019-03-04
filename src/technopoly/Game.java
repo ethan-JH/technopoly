@@ -185,7 +185,7 @@ public class Game {
             System.out.println("Hello " + currentPlayer.getName() + " , please choose an option:");
             System.out.println("1. Roll dice");
             System.out.println("2. Sell property");
-            System.out.println("3. Develop property");
+            System.out.println("3. Grow business");
             System.out.println("4. View resources");
             System.out.println("5. Display board");
             System.out.println("6. End turn");
@@ -208,10 +208,10 @@ public class Game {
                         System.out.println("You rolled a "+movement + ", you have landed on " + currentSquare);
                         break;
                     case 2:
-                        sellProperty();
+                        sellBusiness();
                         break;
                     case 3:
-                        developProperty();
+                        growBusiness();
                         break;
                     case 4:
                         currentPlayer.displayOwnedSquares();
@@ -241,11 +241,11 @@ public class Game {
         } while (!done);
     }
 
-    private void sellProperty() {
-        boolean doneSellProperty = false;
+    private void sellBusiness() {
+        boolean doneSellBusiness = false;
 
 
-        String propertySelect;
+        String businessSelect;
         currentPlayer.displayOwnedSquares();
         if (currentPlayer.getOwnedSquares().size() > 0) {
 
@@ -253,13 +253,13 @@ public class Game {
                     "Type the name of the property you would like to sell, or type 'back' to go back.");
             do {
                 try {
-                    propertySelect = scanner.next();
+                    businessSelect = scanner.next();
                     for (int i = 0; i < currentPlayer.getOwnedSquares().size(); i++) {
                         if (currentPlayer.getOwnedSquares().get(i).getName()
-                                .equalsIgnoreCase(propertySelect)) {
-                            doneSellProperty = confirmSellProperty(doneSellProperty, i);
-                        } else if (propertySelect.equalsIgnoreCase("back")) {
-                            doneSellProperty = true;
+                                .equalsIgnoreCase(businessSelect)) {
+                            doneSellBusiness = confirmSellBusiness(doneSellBusiness, i);
+                        } else if (businessSelect.equalsIgnoreCase("back")) {
+                            doneSellBusiness = true;
                         } else {
                             System.out.println(
                                     "Sorry, that wasn't a valid input. Please type the name of a property you would like to sell and press return, or type 'back' to go back.");
@@ -271,13 +271,13 @@ public class Game {
                     System.out.println(
                             "Sorry, that's not a property you own! Try again, or alternatively type 'back' to go back.");
                 }
-            } while (!doneSellProperty);
+            } while (!doneSellBusiness);
 
         }
     }
 
-    private boolean confirmSellProperty(boolean doneSellProperty, int i) {
-        boolean confirmSellProperty = false;
+    private boolean confirmSellBusiness(boolean doneSellProperty, int i) {
+        boolean confirmSellBusiness = false;
         String confirm;
         do {
             System.out.println("Are you sure you would like to sell "
@@ -299,12 +299,13 @@ public class Game {
                                 .equals(square.getName())) {
                             currentPlayer.setResource(
                                     currentPlayer.getResource() + square.getValue());
+                            square.setHasCampus(false);
                             System.out.println("You have sold " + square.getName() + " for "
                                     + square.getValue() + " and now have "
                                     + currentPlayer.getResource());
                             currentPlayer.getOwnedSquares().remove(i);
                             System.out.println(
-                                    "Would you like to sell another property? (Y/N)");
+                                    "Would you like to sell another business? (Y/N)");
                             try {
                                 confirm = scanner.next();
                                 switch (confirm) {
@@ -312,18 +313,18 @@ public class Game {
                                     case "y":
                                         if (currentPlayer.getOwnedSquares().size() == 0) {
                                             System.out.println(
-                                                    "Looks like you don't have any properties left to sell!");
+                                                    "Looks like you don't have any businesses left to sell!");
                                             doneSellProperty = true;
                                             break;
                                         }
                                         System.out.println(
-                                                "Type the name of the property you would like to sell, or type 'back' to go back.");
-                                        confirmSellProperty = true;
+                                                "Type the name of the business you would like to sell, or type 'back' to go back.");
+                                        confirmSellBusiness = true;
                                         break;
                                     case "N":
                                     case "n":
                                         doneSellProperty = true;
-                                        confirmSellProperty = true;
+                                        confirmSellBusiness = true;
                                         break;
                                     default:
                                         System.out.println(
@@ -341,8 +342,8 @@ public class Game {
                     case "n":
                         System.out.println("Alright, let's go back!");
                         System.out.println(
-                                "Type the name of the property you would like to sell, or type 'back' to go back.");
-                        confirmSellProperty = true;
+                                "Type the name of the business you would like to sell, or type 'back' to go back.");
+                        confirmSellBusiness = true;
                         break;
                     default:
                         System.out.println(
@@ -354,7 +355,7 @@ public class Game {
                 System.out.println(
                         "Sorry, that wasn't a valid input. Please type Y for yes or N for no.");
             }
-        } while (!confirmSellProperty);
+        } while (!confirmSellBusiness);
         return doneSellProperty;
     }
 
@@ -432,13 +433,13 @@ public class Game {
         } while (!done);
     }
 
-    public void developProperty() {
+    public void growBusiness() {
         //test this
-        boolean doneDevelopProperty = false;
+        boolean doneGrowBusiness = false;
         boolean confirmed = false;
-        String property;
+        String business;
         String confirm;
-        String houseHotel = null;
+        String officeCampus = null;
         String developAnother;
         String field;
         int numberOwned = 0;
@@ -446,12 +447,12 @@ public class Game {
         if (currentPlayer.getOwnedSquares().size() > 0) {
             do {
                 currentPlayer.displayOwnedSquares();
-                System.out.println("Type the name of the property you would like to develop and press return, or type 'back' to go back!");
+                System.out.println("Type the name of the business you would like to grow and press return, or type 'back' to go back!");
                 try {
-                    property = scanner.next();
+                    business = scanner.next();
                     for (Square square : currentPlayer.getOwnedSquares()) {
-                        if (property.equalsIgnoreCase(square.getName())) {
-                            System.out.println("Are you sure you would like to develop " + square.getName() + "?(Y/N)");
+                        if (business.equalsIgnoreCase(square.getName())) {
+                            System.out.println("Are you sure you would like to grow " + square.getName() + "?(Y/N)");
                             field = square.getField();
                             for(Square ownedSquare: currentPlayer.getOwnedSquares()){
                                 if(ownedSquare.getField().equals(square.getField())){
@@ -470,20 +471,20 @@ public class Game {
                                         case "Y":
                                         case "y":
                                             do {
-                                                System.out.println("Would you like to place a house or a hotel?");
+                                                System.out.println("Would you like to build an office or a campus?");
                                                 try {
-                                                    houseHotel = scanner.next();
+                                                    officeCampus = scanner.next();
                                                 } catch (InputMismatchException e) {
-                                                    System.out.println("Sorry, that's not a valid response. Please type 'house' to place a house or 'hotel' to place a hotel and press return.");
+                                                    System.out.println("Sorry, that's not a valid response. Please type 'office' to build an office or 'campus' to build a campus and press return.");
                                                 }
-                                                switch (houseHotel) {
-                                                    case "House":
-                                                    case "house":
+                                                switch (officeCampus) {
+                                                    case "Office":
+                                                    case "office":
                                                         if (currentPlayer.getResource() >= 100) {
                                                             if (square.getNumberOfHouses() < 4) {
                                                                 square.setNumberOfHouses(square.getNumberOfHouses() + 1);
                                                                 currentPlayer.setResource(currentPlayer.getResource() - 100);
-                                                                System.out.println("OK, a house has now been placed on " + square.getName() + ". Would you like to develop another property?(Y/N)");
+                                                                System.out.println("OK, an office has now been built for " + square.getName() + ". Would you like to grow another business?(Y/N)");
                                                                 try {
                                                                     developAnother = scanner.next();
                                                                     switch (developAnother) {
@@ -494,7 +495,7 @@ public class Game {
                                                                         case "N":
                                                                         case "n":
                                                                             confirmed = true;
-                                                                            doneDevelopProperty = true;
+                                                                            doneGrowBusiness = true;
                                                                             break;
                                                                         default:
                                                                             System.out.println("Sorry, that's not a valid response. Please type Y for yes or N for no and press return.");
@@ -504,23 +505,23 @@ public class Game {
                                                                     System.out.println("Sorry, that's not a valid response. Please type Y for yes or N for no and press return.");
                                                                 }
                                                             } else {
-                                                                System.out.println("Sorry, you cannot have more than four houses on a property!");
+                                                                System.out.println("Sorry, you cannot have more than four offices for a business!");
                                                                 break;
                                                             }
                                                         } else {
-                                                            System.out.println("Sorry, you have insufficient resources build a house!");
+                                                            System.out.println("Sorry, you have insufficient resources to build an office!");
                                                             break;
                                                         }
 
                                                         break;
-                                                    case "Hotel":
-                                                    case "hotel":
+                                                    case "Campus":
+                                                    case "campus":
                                                         if (currentPlayer.getResource() >= 300) {
-                                                            if (!square.isHasHotel()) {
+                                                            if (!square.isHasCampus()) {
                                                                 if (square.getNumberOfHouses() == 4) {
                                                                     currentPlayer.setResource(currentPlayer.getResource() - 300);
-                                                                    square.setHasHotel(true);
-                                                                    System.out.println("OK, a hotel has now been placed on " + square.getName() + ". You now have " + currentPlayer.getResource() + " resources. Would you like to develop another property?(Y/N)");
+                                                                    square.setHasCampus(true);
+                                                                    System.out.println("OK, a campus has now been built for " + square.getName() + ". You now have " + currentPlayer.getResource() + " resources. Would you like to develop another property?(Y/N)");
                                                                     try {
                                                                         developAnother = scanner.next();
                                                                         switch (developAnother) {
@@ -531,7 +532,7 @@ public class Game {
                                                                             case "N":
                                                                             case "n":
                                                                                 confirmed = true;
-                                                                                doneDevelopProperty = true;
+                                                                                doneGrowBusiness = true;
                                                                                 break;
                                                                             default:
                                                                                 System.out.println("Sorry, that's not a valid response. Please type Y for yes or N for no and press return.");
@@ -542,19 +543,19 @@ public class Game {
                                                                     }
                                                                     break;
                                                                 } else {
-                                                                    System.out.println("Sorry, you need to have four houses on a property before you can build a hotel!");
+                                                                    System.out.println("Sorry, you need to build four offices for a business before you can build a campus!");
                                                                     break;
                                                                 }
                                                             } else {
-                                                                System.out.println("Sorry, you can only build one hotel per field!");
+                                                                System.out.println("Sorry, you can only build one campus per field!");
                                                                 break;
                                                             }
                                                         } else {
-                                                            System.out.println("Sorry, you have insufficient resource to build a hotel!");
+                                                            System.out.println("Sorry, you have insufficient resource to build a campus!");
                                                             break;
                                                         }
                                                     default:
-                                                        System.out.println("Sorry, that's not a valid response. Please type 'house' to place a house or 'hotel' to place a hotel and press return.");
+                                                        System.out.println("Sorry, that's not a valid response. Please type 'office' to build an office or 'campus' to build a campus and press return.");
                                                         break;
                                                 }
                                             } while (!confirmed);
@@ -570,25 +571,25 @@ public class Game {
                                     System.out.println("Sorry, that's not a valid response. Please type Y for yes or N for no and press return.");
                                 }
                             } else {
-                                System.out.println("Sorry, you need to own all the properties in a field to develop it! Let's go back.");
-                                doneDevelopProperty = true;
+                                System.out.println("Sorry, you need to own all the businesses in a field to develop it! Let's go back.");
+                                doneGrowBusiness = true;
                             }
 
-                        } else if (property.equalsIgnoreCase("back")) {
+                        } else if (business.equalsIgnoreCase("back")) {
                             System.out.println("OK, let's go back!");
-                            doneDevelopProperty = true;
+                            doneGrowBusiness = true;
                         } else {
-                            System.out.println("Sorry, that's not a property you own! Please type the name of the property you wish to develop and press return.");
+                            System.out.println("Sorry, that's not a business you own! Please type the name of the business you wish to grow and press return.");
                         }
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println("Sorry, that's not a property you own! Please type the name of the property you wish to develop and press return.");
+                    System.out.println("Sorry, that's not a business you own! Please type the name of the business you wish to grow and press return.");
                 }
 
-            } while (!doneDevelopProperty);
+            } while (!doneGrowBusiness);
         } else {
-            System.out.println("It appears that you don't have any properties to develop!");
+            System.out.println("It appears that you don't have any businesses to develop!");
         }
     }
 }

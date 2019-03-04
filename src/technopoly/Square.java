@@ -4,7 +4,7 @@ public class Square {
 	private String name;
 	private int position;
 	private int value;
-	private boolean hasHotel = false;
+	private boolean hasCampus = false;
 	private int numberOfHouses = 0;
 	private String field;
 	
@@ -35,12 +35,12 @@ public class Square {
 		
 	}
 
-	public boolean isHasHotel() {
-		return hasHotel;
+	public boolean isHasCampus() {
+		return hasCampus;
 	}
 
-	public void setHasHotel(boolean hasHotel) {
-		this.hasHotel = hasHotel;
+	public void setHasCampus(boolean hasCampus) {
+		this.hasCampus = hasCampus;
 	}
 
 	public int getNumberOfHouses() {
