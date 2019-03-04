@@ -399,10 +399,10 @@ public class Game {
     }
 
     public void updatePlayerPosition(int movement, Player player) {
-        if ((player.getPosition() + movement) <= 12) {
+        if ((player.getPosition() + movement) <= 20) {
             player.setPosition(player.getPosition() + movement);
         } else {
-            player.setPosition((player.getPosition() + movement) - 12);
+            player.setPosition((player.getPosition() + movement) - 20);
         }
     }
 
