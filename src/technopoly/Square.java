@@ -5,7 +5,7 @@ public class Square {
 	private int position;
 	private int value;
 	private boolean hasCampus = false;
-	private int numberOfHouses = 0;
+	private int numberOfOffices = 0;
 	private String field;
 	
 	public int getValue() {
@@ -43,12 +43,12 @@ public class Square {
 		this.hasCampus = hasCampus;
 	}
 
-	public int getNumberOfHouses() {
-		return numberOfHouses;
+	public int getNumberOfOffices() {
+		return numberOfOffices;
 	}
 
-	public void setNumberOfHouses(int numberOfHouses) {
-		this.numberOfHouses = numberOfHouses;
+	public void setNumberOfOffices(int numberOfOffices) {
+		this.numberOfOffices = numberOfOffices;
 	}
 
 	public String getField() {

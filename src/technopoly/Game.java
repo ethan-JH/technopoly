@@ -25,10 +25,16 @@ public class Game {
         return this.numberOfPlayers;
     }
 
+    /**
+     * starts the game
+     */
     public void startGame() {
         requestNumberOfPlayers();
     }
 
+    /**
+     * requests the number of players, loops until this is confirmed
+     */
     public void requestNumberOfPlayers() {
         String confirm;
 
@@ -81,6 +87,10 @@ public class Game {
         scanner.close();
     }
 
+    /**
+     * requests player names, loops until they are all confirmed
+     * @param numberOfPlayers
+     */
     public void requestPlayerNames(int numberOfPlayers) {
         String name = null;
         String confirm;
@@ -134,6 +144,7 @@ public class Game {
                 currentPlayer = element;
             }
         }
+        //print out a welcome message to all the players
         System.out.print("Welcome, ");
         for (int i = 0; i < playerList.size(); i++) {
             if (i <= 2) {
@@ -148,6 +159,9 @@ public class Game {
         displayTurnOptions();
     }
 
+    /**
+     * generates the board, with squares of appropriate values and fields
+     */
     public void generateBoard() {
         board = new Board();
         ArrayList<Square> squares = new ArrayList<Square>();
@@ -177,6 +191,9 @@ public class Game {
 
     }
 
+    /**
+     * displays the current player's turn options at the beginning of their turn. Loops until they end their turn or roll the dice.
+     */
     public void displayTurnOptions() {
         boolean done = false;
         int response;
@@ -241,6 +258,9 @@ public class Game {
         } while (!done);
     }
 
+    /**
+     * allows player to sell owned businesses
+     */
     private void sellBusiness() {
         boolean doneSellBusiness = false;
 
@@ -254,10 +274,12 @@ public class Game {
             do {
                 try {
                     businessSelect = scanner.next();
+                    //checks player owns the business they've named
                     for (int i = 0; i < currentPlayer.getOwnedSquares().size(); i++) {
                         if (currentPlayer.getOwnedSquares().get(i).getName()
                                 .equalsIgnoreCase(businessSelect)) {
                             doneSellBusiness = confirmSellBusiness(doneSellBusiness, i);
+                            //allows player to go back if they type 'back'
                         } else if (businessSelect.equalsIgnoreCase("back")) {
                             doneSellBusiness = true;
                         } else {
@@ -276,6 +298,12 @@ public class Game {
         }
     }
 
+    /**
+     * is called within sell business, further logic to confirm the player is done selling
+     * @param doneSellProperty
+     * @param i
+     * @return
+     */
     private boolean confirmSellBusiness(boolean doneSellProperty, int i) {
         boolean confirmSellBusiness = false;
         String confirm;
@@ -359,6 +387,11 @@ public class Game {
         return doneSellProperty;
     }
 
+    /**
+     * allows player to end their turn/pass (do we want to keep this option?)
+     * @param done
+     * @return
+     */
     private boolean endTurn(boolean done) {
         String confirmEnd;
         boolean endConfirmed = false;
@@ -399,6 +432,11 @@ public class Game {
         return done;
     }
 
+    /**
+     * updates the player position after they move
+     * @param movement
+     * @param player
+     */
     public void updatePlayerPosition(int movement, Player player) {
         if ((player.getPosition() + movement) <= 20) {
             player.setPosition(player.getPosition() + movement);
@@ -407,6 +445,9 @@ public class Game {
         }
     }
 
+    /**
+     * ends the game if someone chooses the option to forfeit
+     */
     public void endGame() {
         String response;
         boolean done = false;
@@ -433,6 +474,9 @@ public class Game {
         } while (!done);
     }
 
+    /**
+     * allows player to build offices or campuses
+     */
     public void growBusiness() {
         //test this
         boolean doneGrowBusiness = false;
@@ -455,15 +499,18 @@ public class Game {
                             System.out.println("Are you sure you would like to grow " + square.getName() + "?(Y/N)");
                             field = square.getField();
                             for(Square ownedSquare: currentPlayer.getOwnedSquares()){
+                                //numberOwned keeps track of the number of businesses in a field the player owns
                                 if(ownedSquare.getField().equals(square.getField())){
                                     numberOwned += 1;
                                 }
                             }
+                            //finds how many squares there are on the board within the field of the business selected by the user
                             for(Square allSquares: board.getSquares()){
                                 if(allSquares.getField().equals(field)){
                                     numberInField += 1;
                                 }
                             }
+                            //compares number of businesses in field owned by player and number on the board; only allows player to build offices/campuses if they own all the businesses in a field
                             if(numberOwned == numberInField) {
                                 try {
                                     confirm = scanner.next();
@@ -480,9 +527,11 @@ public class Game {
                                                 switch (officeCampus) {
                                                     case "Office":
                                                     case "office":
+                                                        //cost to build 100, may change this?
                                                         if (currentPlayer.getResource() >= 100) {
-                                                            if (square.getNumberOfHouses() < 4) {
-                                                                square.setNumberOfHouses(square.getNumberOfHouses() + 1);
+                                                            //prevents user from building more than four offices for a business
+                                                            if (square.getNumberOfOffices() < 4) {
+                                                                square.setNumberOfOffices(square.getNumberOfOffices() + 1);
                                                                 currentPlayer.setResource(currentPlayer.getResource() - 100);
                                                                 System.out.println("OK, an office has now been built for " + square.getName() + ". Would you like to grow another business?(Y/N)");
                                                                 try {
@@ -516,9 +565,11 @@ public class Game {
                                                         break;
                                                     case "Campus":
                                                     case "campus":
+                                                        //cost to build 300, could change this?
                                                         if (currentPlayer.getResource() >= 300) {
                                                             if (!square.isHasCampus()) {
-                                                                if (square.getNumberOfHouses() == 4) {
+                                                                //must have four offices to place a campus
+                                                                if (square.getNumberOfOffices() == 4) {
                                                                     currentPlayer.setResource(currentPlayer.getResource() - 300);
                                                                     square.setHasCampus(true);
                                                                     System.out.println("OK, a campus has now been built for " + square.getName() + ". You now have " + currentPlayer.getResource() + " resources. Would you like to develop another property?(Y/N)");
