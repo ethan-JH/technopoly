@@ -3,7 +3,6 @@
  */
 package technopoly;
 
-import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -17,10 +16,10 @@ public class Game {
     private int numberOfPlayers;
     private boolean correctNumberOfPlayers = false;
     private boolean confirmed = false;
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    ArrayList<Player> playerList = new ArrayList<Player>();
     private Player currentPlayer;
-    private Board board;
-    private String currentSquare;
+    Board board;
+    String currentSquare;
 
     public int getNumberOfPlayers() {
         return this.numberOfPlayers;
@@ -206,7 +205,9 @@ public class Game {
             System.out.println("3. Grow business");
             System.out.println("4. View resources");
             System.out.println("5. Display board");
-            System.out.println("6. Forfeit game");
+            System.out.println("6. End turn");
+            System.out.println("7. Forfeit game");
+            System.out.println("8. Save & quit");
 
             try {
                 response = scanner.nextInt();
@@ -237,7 +238,12 @@ public class Game {
                         board.displayBoard();
                         break;
                     case 6:
+                        done = endTurn(done);
+                        break;
+                    case 7:
                         endGame();
+                        break;
+                    case 8: // save and quit
                         break;
                     default:
                         System.out.println("Sorry, " + response
@@ -382,15 +388,48 @@ public class Game {
     }
 
     /**
-     * is called when someone goes below zero (paying rent/tax etc. on squares); may wish to add the value of properties to this?
+     * allows player to end their turn/pass (do we want to keep this option?)
+     * @param done
      * @return
      */
-    private void endGame(Player currentPlayer) {
-        System.out.println(currentPlayer.getName() + " has run out of money; game over!");
-        playerList.sort(Comparator.comparing(Player::getResource));
-        for(Player player: playerList){
-            System.out.println(player.getName() + ": "+player.getResource());
-        }
+    private boolean endTurn(boolean done) {
+        String confirmEnd;
+        boolean endConfirmed = false;
+        do {
+            System.out.println("Are you sure you would like to end your turn? (Y/N)");
+            try {
+                confirmEnd = scanner.next();
+                switch (confirmEnd) {
+                    case "Y":
+                    case "y":
+                        System.out.println("Alright, advancing turn!");
+                        endConfirmed = true;
+                        done = true;
+                        if (currentPlayer == playerList.get((playerList.size() - 1))) {
+                            currentPlayer = playerList.get(0);
+
+                        } else {
+                            currentPlayer = playerList.get(currentPlayer.getPlayerNumber());
+                        }
+                        displayTurnOptions();
+
+                        break;
+                    case "N":
+                    case "n":
+                        System.out.println("Alright, let's go back");
+                        endConfirmed = true;
+                        break;
+                    default:
+                        System.out.println(
+                                "Sorry, that's not a valid input. Please type Y for yes or N for no and hit return.");
+
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Sorry, that's an invalid input. Please type Y for yes or N for no.");
+            }
+        } while (!endConfirmed);
+        return done;
     }
 
     /**
