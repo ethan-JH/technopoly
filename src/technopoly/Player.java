@@ -15,6 +15,7 @@ public class Player {
 	private String name;
 	private int playerNumber;
 	private int resource;
+	private int numberOfUtilitiesOwned;
 
 	public Player(int position, String name, int playerNumber) {
 		this.position = position;
@@ -74,9 +75,24 @@ public class Player {
 	public void setPosition(int position) {
 		this.position = position;
 	}
+	
+	/**
+	 * @return the numberOfUtilitiesOwned
+	 */
+	public int getNumberOfUtilitiesOwned() {
+		return numberOfUtilitiesOwned;
+	}
 
+	/**
+	 * @param numberOfUtilitiesOwned the numberOfUtilitiesOwned to set
+	 */
+	public void setNumberOfUtilitiesOwned(int numberOfUtilitiesOwned) {
+		this.numberOfUtilitiesOwned = numberOfUtilitiesOwned;
+	}
+
+	
 	public void updatePosition(int rollNumber) {
 
 	}
-
+	
 }
