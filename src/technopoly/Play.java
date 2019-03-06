@@ -7,7 +7,6 @@ public class Play {
 		game.startGame();
 		
 		
-		
 
 	}
 
