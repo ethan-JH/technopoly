@@ -30,7 +30,7 @@ public class Game {
      * starts the game
      */
     public void startGame() {
-        requestNumberOfPlayers();
+    	requestNumberOfPlayers();
     }
 
     /**
@@ -164,32 +164,36 @@ public class Game {
      * generates the board, with squares of appropriate values and fields
      */
     public void generateBoard() {
+    	
         board = new Board();
         ArrayList<Square> squares = new ArrayList<Square>();
         //currently 'value' is used to store both the cost to purchase and the amount someone gains/loses
         //from stopping there - change?
-        squares.add(new Square("Funding Round", 1, 200,"N/A"));
-        squares.add(new Square("Netflix", 2, 60, "Streaming"));
-        squares.add(new Square("TechCoin Mine", 3, 150, "N/A"));
-        squares.add(new Square("Hulu", 4, 60, "Streaming"));
-        squares.add(new Square("Digital Tax", 5, 70, "N/A"));
-        squares.add(new Square("Chance", 6, 0, "N/A"));
-        squares.add(new Square("eBay", 7, 140, "eCommerce"));
-        squares.add(new Square("Data Centre", 8, 140, "N/A"));
-        squares.add(new Square("Alibaba", 9, 140, "eCommerce"));
-        squares.add(new Square("Amazon", 10, 160, "eCommerce"));
-        squares.add(new Square("Holiday", 11, 0, "N/A"));
-        squares.add(new Square("Twitter", 12, 260, "Social Media"));
-        squares.add(new Square("Instagram", 13, 140, "Social Media"));
-        squares.add(new Square("Techcoin Mine", 14, 150, "N/A"));
-        squares.add(new Square("Facebook", 15, 140, "Social Media"));
-        squares.add(new Square("Chance", 16, 140, "N/A"));
-        squares.add(new Square("Hacked", 17, 200, "N/A"));
-        squares.add(new Square("Apple", 18, 350, "Software Giant"));
-        squares.add(new Square("Data Centre", 19, 140, "N/A"));
-        squares.add(new Square("Microsoft", 20, 400, "Software giant"));
-        board.setSquares(squares);
 
+        squares.add(new GO("Funding Round", 1, 200,"N/A"));
+             squares.add(new StreamingService("Netflix", 2, 60, "Streaming Service", "Not Owned", 0,0 , false, 40, 40, 12));
+             squares.add(new Utility("TECHCOIN MINE", 3, 150, "Utility", 0, 30));
+             squares.add(new StreamingService("Hulu", 4, 60, "Streaming Service", "Not Owned", 0, 0, false, 40, 40, 12));
+             squares.add(new Tax("Digital Tax", 5, 200, "Digital Tax"));
+             squares.add(new Chance("Chance", 6, 0, "Chance", "Chance"));
+             squares.add(new Retail("Ebay", 7, 140, "Retail", "Not Owned", 0, 0, false, 105, 105, 28));
+             squares.add(new Utility("DATA CENTRE", 8, 150, "DATA CENTRE", 0, 30));
+             squares.add(new Retail("Alibaba", 9, 140, "Retail", "Not Owned", 0, 0, false, 105, 105, 28));
+             squares.add(new Retail("Amazon", 10, 160, "Retail", "Not Owned", 0, 0, false, 120, 120, 32));
+             squares.add(new Holiday("Holiday", 11, 0, "Holiday"));
+             squares.add(new SocialMedia("Twitter", 12, 260, "Social Media", "Not Owned", 0,0,false, 195, 195, 52));
+             squares.add(new SocialMedia("Instagram",13, 260, "Social Media", "Not Owned", 0,0,false, 195, 195, 52));
+             squares.add(new Utility("TECHCOIN MINE", 14, 150, "TECHCOIN MINE", 0, 30));
+             squares.add(new SocialMedia("Facebook", 15, 280, "Social Media", "Not Owned", 0,0,false, 210, 210, 56));
+             squares.add(new Chance("Chance", 16, 0, "Chance", "Chance"));
+             squares.add(new Tax("Hacked", 17, 100, "Hacked"));
+             squares.add(new TechGiant("Apple", 18, 350, "Tech Giant", "Not Owned", 0, 0, false, 265, 265, 70));
+             squares.add(new Utility("DATA CENTRE", 19, 150, "DATA CENTRE", 0, 30));
+             squares.add(new TechGiant("Microsoft", 20, 400, "Tech Giant", "Not Owned", 0, 0, false, 300, 300, 80));
+             board.setSquares(squares);
+       
+        board.setSquares(squares);
+    
     }
 
     /**
@@ -491,7 +495,7 @@ public class Game {
                                                         //cost to build 100, may change this?
                                                         if (currentPlayer.getResource() >= 100) {
                                                             //prevents user from building more than four offices for a business
-                                                            if (square.getNumberOfOffices() < 4) {
+                                                            if(square.getNumberOfOffices() < 4) {
                                                                 square.setNumberOfOffices(square.getNumberOfOffices() + 1);
                                                                 currentPlayer.setResource(currentPlayer.getResource() - 100);
                                                                 System.out.println("OK, an office has now been built for " + square.getName() + ". Would you like to grow another business?(Y/N)");

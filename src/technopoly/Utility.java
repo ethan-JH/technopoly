@@ -33,6 +33,7 @@ public class Utility extends Square {
 		this.subscription = subscription;
 	}
 
+
 	/**
 	 * @return the squareOwnership
 	 */
