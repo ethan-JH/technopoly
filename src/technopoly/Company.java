@@ -7,8 +7,8 @@ package technopoly;
  * @author jmac
  *
  */
-public class Company extends Square {
-	private String squareOwnership;
+public abstract class Company extends Square {
+	private int squareOwnership;
 	private int numberOfOffices;
 	private int numberOfCampuses; 
 	private boolean hasCampus; 
@@ -28,7 +28,7 @@ public class Company extends Square {
 	 * @param hasCampus 
 	 */
 	
-	public Company(String name, int position, int value,  String field, String squareOwnership, int numberOfOffices, int numberOfCampuses, boolean hasCampus) {
+	public Company(String name, int position, int value,  String field, int squareOwnership, int numberOfOffices, int numberOfCampuses, boolean hasCampus) {
 		super(name, position, value, field);
 		this.squareOwnership=squareOwnership;
 		this.numberOfOffices=numberOfOffices;
@@ -36,11 +36,11 @@ public class Company extends Square {
 		this.hasCampus=hasCampus;
 	}
 
-	public String getSquareOwnership() {
+	public int getSquareOwnership() {
 		return squareOwnership;
 	}
 
-	public void setSquareOwnership(String squareOwnership) {
+	public void setSquareOwnership(int squareOwnership) {
 		this.squareOwnership = squareOwnership;
 	}
 
@@ -67,14 +67,9 @@ public class Company extends Square {
 	public void setHasCampus(boolean hasCampus) {
 		this.hasCampus = hasCampus;
 	}
-	public void addSubscription(int numberOfOffices, int numberOfCampuses) {
-		
-	}
-
-	@Override
-	public void sendSquareDetails(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract int addSubscription(int numberOfOffices, int numberOfCampuses);
+	
+	public abstract void sendSquareDetails(Player player);
+	
 
 }

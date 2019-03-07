@@ -16,6 +16,10 @@ public class Player {
 	private int playerNumber;
 	private int resource;
 	private int numberOfUtilitiesOwned;
+	private int numberOfTechGiantOwned;
+	private int numberOfSocialMediaOwned;
+	private int numberOfRetailOwned;
+	private int numberOfStreamingServiceOwned;
 
 	public Player(int position, String name, int playerNumber) {
 		this.position = position;
@@ -91,6 +95,40 @@ public class Player {
 	}
 
 	
+	
+	public int getNumberOfTechGiantOwned() {
+		return numberOfTechGiantOwned;
+	}
+
+	public void setNumberOfTechGiantOwned(int numberOfTechGiantOwned) {
+		this.numberOfTechGiantOwned = numberOfTechGiantOwned;
+	}
+	
+
+	public int getNumberOfSocialMediaOwned() {
+		return numberOfSocialMediaOwned;
+	}
+
+	public void setNumberOfSocialMediaOwned(int numberOfSocialMediaOwned) {
+		this.numberOfSocialMediaOwned = numberOfSocialMediaOwned;
+	}
+
+	public int getNumberOfRetailOwned() {
+		return numberOfRetailOwned;
+	}
+
+	public void setNumberOfRetailOwned(int numberOfRetailOwned) {
+		this.numberOfRetailOwned = numberOfRetailOwned;
+	}
+
+	public int getNumberOfStreamingServiceOwned() {
+		return numberOfStreamingServiceOwned;
+	}
+
+	public void setNumberOfStreamingServiceOwned(int numberOfStreamingServiceOwned) {
+		this.numberOfStreamingServiceOwned = numberOfStreamingServiceOwned;
+	}
+
 	public void updatePosition(int rollNumber) {
 
 	}
