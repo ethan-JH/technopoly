@@ -88,7 +88,10 @@ public class TechGiant extends Company {
 		if(numberOfOffices <=3) {		// subscription fee for up to 3 houses
 			setSubscription(subscription+=(numberOfOffices*100));
 		}		
-		else { //fee for campuses - offices not included in this fee as when a campus is build offices are removed
+		else if(numberOfOffices>=1 && numberOfCampuses>=1) { // subscription fee for having offices and hotels
+			setSubscription(subscription+=(numberOfOffices*100) + (numberOfCampuses*500));
+				
+		} else { //fee for campuses - offices not included in this fee as when a campus is build offices are removed
 			setSubscription(subscription+=(numberOfCampuses*500));	
 			}
 		return subscription;

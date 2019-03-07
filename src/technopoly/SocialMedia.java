@@ -91,8 +91,9 @@ public class SocialMedia extends Company {
 		
 		if(numberOfOffices <=3) {		// subscription fee for up to 3 houses
 			setSubscription(subscription+=(numberOfOffices*75));
-		}		
-		else { //fee for campuses - offices not included in this fee as when a campus is built offices are removed
+		} else if(numberOfOffices>=1 && numberOfCampuses>=1) { // subscription fee for having offices and hotels
+			setSubscription(subscription+=(numberOfOffices*75) + (numberOfCampuses*375));
+		} else { //fee for campuses - offices not included in this fee as when a campus is built offices are removed
 			setSubscription(subscription+=(numberOfCampuses*375));	
 			}
 		return subscription;
