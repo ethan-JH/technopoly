@@ -133,4 +133,46 @@ public class Player {
 
 	}
 	
+	/**
+	 * displays all of the resources owned by the player
+	 * @param Resource
+	 */
+	public void displayResources() {
+		
+		System.out.println("You currently have " + getResource() + " Techcoins");
+		displayOwnedSquares();
+		
+		if(getNumberOfStreamingServiceOwned() < 2) {
+			System.out.println("You own " + getNumberOfStreamingServiceOwned() + " out of the 2 Streaming Companies");
+		} else if (getNumberOfStreamingServiceOwned() == 2){
+			System.out.println("You own both the Streaming Companies and can now develop Offices and Campuses there!");
+		}
+		
+		if(getNumberOfRetailOwned() < 3) {
+			System.out.println("You own " + getNumberOfRetailOwned() + " out of the 3 Retail Companies");
+		} else if (getNumberOfRetailOwned() == 3){
+			System.out.println("You own all the Retail Companies and can now develop Offices and Campuses there!");
+		}
+		
+		if(getNumberOfSocialMediaOwned() < 3) {
+			System.out.println("You own " + getNumberOfSocialMediaOwned() + " out of the 3 Social Media Companies");
+		} else if (getNumberOfRetailOwned() == 3){
+			System.out.println("You own all the Social Media Companies and can now develop Offices and Campuses there!");
+		}
+		
+		if(getNumberOfTechGiantOwned() < 2) {
+			System.out.println("You own " + getNumberOfTechGiantOwned() + " out of the 2 Tech Giants");
+		} else if (getNumberOfTechGiantOwned() == 2){
+			System.out.println("You own all the Tech Giants and can now develop Offices and Campuses there!");
+		}
+		
+		if(getNumberOfUtilitiesOwned() < 4) {
+			System.out.println("You own " + getNumberOfUtilitiesOwned() + " out of the 4 Data Centres and Techcoin Mines");
+		} else if (getNumberOfUtilitiesOwned() == 4){
+			System.out.println("You own all of the Data Centres and Techcoin Mines!");
+		}
+		
+		System.out.println();
+	}
+	
 }
