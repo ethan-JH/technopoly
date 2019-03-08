@@ -15,8 +15,11 @@ public class Campus {
 	public Campus() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public static void updateNumberOfCampuses(Company company) {
+	/**
+	 * could update method to allow for more than one campus being built as you can buy more than one hotel in monopoly
+	 * @param company
+	 */
+	public void updateNumberOfCampuses(Company company) {
 		if (!company.isHasCampus()) {
 			int numberOfCampuses = company.getNumberOfCampuses();
 			numberOfCampuses++;

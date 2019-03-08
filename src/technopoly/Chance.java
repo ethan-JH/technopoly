@@ -14,6 +14,10 @@ public class Chance extends Square {
 	
 	// instance vars
 	private String chanceResponse;
+	
+	public Chance() {
+		
+	}
 
 	/**
 	 * @param name

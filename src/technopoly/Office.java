@@ -24,7 +24,7 @@ public class Office {
 	 * @param company
 	 */
 	public void updateNumberOfOffices(Company company) {
-		if (company.getNumberOfOffices() < 5) {
+		if (company.getNumberOfOffices() < 4) {
 			int numberOfOffices = company.getNumberOfOffices();
 			numberOfOffices++;
 			company.setNumberOfOffices(numberOfOffices);
