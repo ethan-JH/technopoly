@@ -3,6 +3,10 @@
  */
 package technopoly;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 /**
  * @author jmac
  *
@@ -69,15 +73,25 @@ public class StreamingService extends Company {
 	/**
 	 * sends details to player
 	 */
-	public void sendSquareDetails(Player player) {
-		System.out.println(player.getName() + "has landed on "+ getName()+" it is a "+ getField()+ " company and costs "+getValue());
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+		System.out.println(player.getName() + " has landed on "+ getName()+" it is a "+ getField()+ " company and costs "+getValue());
 		
 		if (getSquareOwnership()==player.getPlayerNumber()) {	//check if player already owns square
-			System.out.println("You already own " + getName());
+			System.out.println("You already own " + this.getName()+ ", no subscription required");
 		}else if (getSquareOwnership()!=0 && getSquareOwnership()!=player.getPlayerNumber()) {	// check if other player owns square
-			System.out.println(getName() + "is owned by Player "+ getSquareOwnership()+". There are "+ getNumberOfOffices()+" Offices and "+getNumberOfCampuses()+" Campuses. Pay the owner a subscription of "+ getSubscription() + " Techcoin.");
+			System.out.println(getName() + " is owned by Player "+ getSquareOwnership()+". There are "+ getNumberOfOffices()+" Offices and "+getNumberOfCampuses()+" Campuses. Pay the owner a subscription of "+ getSubscription() + " Techcoin.");
+			
+			for (Player owner : playerList) {
+				if (getSquareOwnership() == owner.getPlayerNumber()) {
+					updateResource(-getSubscription(), player);
+					updateResource(getSubscription(), owner);
+
+					System.out.println(player.getName() + " now has " + player.getResource() + " Techcoin. "
+							+ owner.getName() + " now has " + owner.getResource() + " Techcoin.");
+				}
+			}
 		} else if (getSquareOwnership()==0 && player.getResource()>=getValue()) { //if square is unowned check if player has enough to buy square
-			System.out.println("This is an unowned square. Would you like to buy "+ getName()+ " for "+ getValue()+"? You have "+ player.getResource()+ " Techcoin.");	
+			buyCompany(player);
 		} else { // player does not have enough to buy square
 			System.out.println("Sorry you don't have enough to buy this square, you only have "+player.getResource()+ " Techcoin.");
 		}
@@ -96,23 +110,62 @@ public class StreamingService extends Company {
 		}		
 		else { //fee for campuses - offices not included in this fee as when a campus is built offices are removed
 			setSubscription(subscription+=(numberOfCampuses*125));	
-			}
+		}
 		return subscription;
 	}
-	
 
-		/**
-		 * 
-		 * when called increments number of Streaming owned by 1, checks if all Streaming is owned
-		 */
-		public void updateStreamingOwned(Player player) {
-				int numberOfStreamingOwned = player.getNumberOfStreamingServiceOwned();
-				player.setNumberOfStreamingServiceOwned(++numberOfStreamingOwned); // adds 1 Streaming when called
-				if (numberOfStreamingOwned==2) {
-					System.out.println("You own all of the "+ getField() +" companies. You can now begin developing offices and campuses.");
-				}
-			
+	/**
+	 * 
+	 * when called increments number of Streaming owned by 1, checks if all Streaming is owned
+	 */
+	public void updateStreamingOwned(Player player) {
+		int numberOfStreamingOwned = player.getNumberOfStreamingServiceOwned();
+		player.setNumberOfStreamingServiceOwned(++numberOfStreamingOwned); // adds 1 Streaming when called
+		if (numberOfStreamingOwned==2) {
+			System.out.println("You own all of the "+ getField() +" companies. You can now begin developing offices and campuses.");
 		}
-		
+			
 	}
+		
+	/**
+	 * method to allow the player to buy a company
+	 * 
+	 * @param player
+	 */
+	public void buyCompany(Player player) {
+		Scanner scanner = new Scanner(System.in);
+		String confirm;
+		boolean doneBuyCompany = false;
+
+		do {
+			System.out.println(getName() + " is available for purchase for " + getValue() + " Techcoin");
+			System.out.println("Would you like to purchase " + getName() + "? (Y/N)");
+			try {
+				confirm = scanner.next();
+				if (confirm.equalsIgnoreCase("y")) {
+
+					updateResource(-getValue(), player);
+					setSquareOwnership(player.getPlayerNumber());
+					updateStreamingOwned(player);
+					System.out.println(getName() + " is now owned by " + player.getName() + ". You now have "
+							+ player.getResource() + " Techcoin");
+					System.out.println();
+					doneBuyCompany = true;
+
+				} else if (confirm.equalsIgnoreCase("n")) {
+					
+					System.out.println("Ok. " + getName() + " is still available for purchase");
+					doneBuyCompany = true;
+					
+				} else {
+					System.out.println("You must enter either Y or N for yes or no.");
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input, enter Y or N for yes or no.");
+			}
+		} while (!doneBuyCompany);
+		scanner.close();
+	}
+}
 	

@@ -1,5 +1,7 @@
 package technopoly;
 
+import java.util.ArrayList;
+
 /**
  * abstract class which holds details of Square objects
  * @author Ethan
@@ -100,7 +102,7 @@ public abstract class Square {
 	 * sends details regarding each square when a player lands on it
 	 * @param player
 	 */
-	public abstract void sendSquareDetails(Player player);
+	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList);
 	
 	/**
 	 * updates the resources of the player based on the square

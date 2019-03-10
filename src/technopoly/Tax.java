@@ -3,6 +3,8 @@
  */
 package technopoly;
 
+import java.util.ArrayList;
+
 /**
  * @author Ethan
  *	Tax square class which takes 200 resources if a player lands here
@@ -35,10 +37,11 @@ public class Tax extends Square {
 	 * sends details of the square and removes 200 resources from the player
 	 */
 	@Override
-	public void sendSquareDetails(Player player) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
 
-		System.out.println(player.getName() + " has been HACKED! The hackers have made off with 200 of your Techcoins");
+		System.out.println(player.getName() + " has been HACKED! The hackers have made off with 200 of your Techcoins!");
 		updateResource(TAX_COST, player);
+		System.out.println("You now have " + player.getResource() + " Techcoins.");
 
 	}
 

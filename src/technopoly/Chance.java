@@ -3,6 +3,7 @@
  */
 package technopoly;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -84,8 +85,9 @@ public class Chance extends Square {
 	 * sends details of the chance square to the player and starts generateChanceResponse method
 	 */
 	@Override
-	public void sendSquareDetails(Player player) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
 		System.out.println(player.getName()+ " has landed on Chance, what could happen next?");
+		generateChanceResponse(player);
 	}
 
 }

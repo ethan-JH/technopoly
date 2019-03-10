@@ -3,6 +3,8 @@
  */
 package technopoly;
 
+import java.util.ArrayList;
+
 /**
  * @author jmac
  *
@@ -69,7 +71,7 @@ public abstract class Company extends Square {
 	}
 	public abstract int addSubscription(int numberOfOffices, int numberOfCampuses);
 	
-	public abstract void sendSquareDetails(Player player);
+	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList);
 	
 
 }

@@ -7,35 +7,71 @@ import java.util.ArrayList;
 
 /**
  * @author Luke
- *
+ * class to hold board which contains an ArrayList of the Squares used in the game
  */
 public class Board {
+	
+	// ArrayList to hold squares
     private ArrayList<Square> squares = new ArrayList<Square>();
-
-
+    
+    /**
+     * default constructor
+     */
+    public Board() {
+    	
+    }
+    
+    /**
+     * constructor with args
+     * @param squares
+     */
+    public Board(ArrayList<Square> squares) {
+    	this.squares = squares;
+    }
+    
+    /**
+     * 
+     * @return the squares
+     */
     public ArrayList<Square> getSquares() {
         return squares;
     }
-
+    
+    /**
+     * sets the squares
+     * @param squares
+     */
     public void setSquares(ArrayList<Square> squares) {
         this.squares = squares;
     }
-
-    public void displayBoard() {
-        //can this also include player positions?
+    
+    /**
+     * displays all the squares on the board and the order they appear in
+     * tells the current player what square they are on
+     */
+    public void displayBoard(Player player) {
         for (int i = 0; i < squares.size(); i++) {
-            System.out.println((i + 1) + ". " + squares.get(i).getName());
+            System.out.printf("%d. %s" ,(i + 1), squares.get(i).getName());
+            if(player.getPosition() == squares.get(i).getPosition()) {
+            	System.out.printf(" : You are at this square");
+            }
             System.out.println();
         }
+        System.out.println();
     }
-
-    public void selectDestinationSquare(int position, Player player) {
-        for (Square element : squares) {
-            if (element.getPosition() == player.getPosition()) {
-                element.sendSquareDetails(player);
+    
+    /**
+     * selects the destination square of the player and sends the square details to the player
+     * @param position
+     * @param player
+     */
+    public void selectDestinationSquare(int position, Player player, ArrayList<Player> playerList) {
+        for (Square square : squares) {
+            if (square.getPosition() == player.getPosition()) {
+                square.sendSquareDetails(player, playerList);
             }
         }
     }
 
-    }
+}
 
