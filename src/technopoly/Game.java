@@ -1,5 +1,5 @@
 /**
- *
+ * contains Technopoly game classes
  */
 package technopoly;
 
@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-/**
+/**Game engine for Technopoly
  * @author Luke
  *
  */
@@ -17,14 +17,11 @@ public class Game {
 	private int numberOfPlayers;
 	private boolean correctNumberOfPlayers = false;
 	private boolean confirmed = false;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private ArrayList<Player> playerList = new ArrayList<>();
 	private Player currentPlayer;
 	private Board board;
 	private String currentSquare;
 
-	public int getNumberOfPlayers() {
-		return this.numberOfPlayers;
-	}
 
 	/**
 	 * starts the game
@@ -37,47 +34,12 @@ public class Game {
 	 * requests the number of players, loops until this is confirmed
 	 */
 	public void requestNumberOfPlayers() {
-		String confirm;
-
 		System.out.println("How many people are playing? Choose 1, 2, 3 or 4!");
 		do {
 			try {
 				numberOfPlayers = scanner.nextInt();
 				System.out.println("Are you sure you would like to play with " + numberOfPlayers + " players? Y/N");
-				do {
-					try {
-						confirm = scanner.next();
-
-						switch (confirm) {
-						case "Y":
-							correctNumberOfPlayers = true;
-							confirmed = true;
-							requestPlayerNames(numberOfPlayers);
-							break;
-						case "y":
-							correctNumberOfPlayers = true;
-							confirmed = true;
-							requestPlayerNames(numberOfPlayers);
-							break;
-						case "N":
-							requestNumberOfPlayers();
-							break;
-						case "n":
-							requestNumberOfPlayers();
-							break;
-						default:
-							System.out.println(
-									"Sorry, that's not a valid response! Type Y for yes or N for no and press return.");
-
-							break;
-
-						}
-
-					} catch (InputMismatchException e) {
-						System.out.println(
-								"Oops, that doesn't seem right. Please type Y for yes or N for no and press return!");
-					}
-				} while (!confirmed);
+				confirmNumberPlayers();
 
 			} catch (InputMismatchException e) {
 				System.out.println(
@@ -88,10 +50,48 @@ public class Game {
 		scanner.close();
 	}
 
+	public void confirmNumberPlayers() {
+		String confirm;
+		do {
+			try {
+				confirm = scanner.next();
+
+				switch (confirm) {
+				case "Y":
+					correctNumberOfPlayers = true;
+					confirmed = true;
+					requestPlayerNames(numberOfPlayers);
+					break;
+				case "y":
+					correctNumberOfPlayers = true;
+					confirmed = true;
+					requestPlayerNames(numberOfPlayers);
+					break;
+				case "N":
+					requestNumberOfPlayers();
+					break;
+				case "n":
+					requestNumberOfPlayers();
+					break;
+				default:
+					System.out.println(
+							"Sorry, that's not a valid response! Type Y for yes or N for no and press return.");
+
+					break;
+
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println(
+						"Oops, that doesn't seem right. Please type Y for yes or N for no and press return!");
+			}
+		} while (!confirmed);
+	}
+
 	/**
 	 * requests player names, loops until they are all confirmed
 	 * 
-	 * @param numberOfPlayers
+	 * @param numberOfPlayers (the number of players confirmed in confirmNumberPlayers)
 	 */
 	public void requestPlayerNames(int numberOfPlayers) {
 		String name = null;
@@ -140,13 +140,20 @@ public class Game {
 			} while (!nameConfirmed);
 
 		}
+		setUp();
+	}
+
+	public void setUp() {
 		// set player 1 to go first
-		for (Player element : playerList) {
-			if (element.getPlayerNumber() == 1) {
-				currentPlayer = element;
-			}
-		}
+		setFirstPlayer();
 		// print out a welcome message to all the players
+		welcomePlayers();
+		generateBoard();
+		currentPlayer.getOwnedCompanies().add((Company)board.getSquares().get(1));
+		displayTurnOptions();
+	}
+
+	public void welcomePlayers() {
 		System.out.print("Welcome, ");
 		for (int i = 0; i < playerList.size(); i++) {
 			if (i <= 2) {
@@ -156,9 +163,14 @@ public class Game {
 			}
 		}
 		System.out.print("...to Technopoly!! \n\n");
-		generateBoard();
-		currentPlayer.getOwnedSquares().add(board.getSquares().get(1));
-		displayTurnOptions();
+	}
+
+	public void setFirstPlayer() {
+		for (Player element : playerList) {
+			if (element.getPlayerNumber() == 1) {
+				currentPlayer = element;
+			}
+		}
 	}
 
 	/**
@@ -167,7 +179,7 @@ public class Game {
 	public void generateBoard() {
 
 		board = new Board();
-		ArrayList<Square> squares = new ArrayList<Square>();
+		ArrayList<Square> squares = new ArrayList<>();
 		// currently 'value' is used to store both the cost to purchase and the amount
 		// someone gains/loses
 		// from stopping there - change?
@@ -219,16 +231,7 @@ public class Game {
 				response = scanner.nextInt();
 				switch (response) {
 				case 1:
-					Die d1 = new Die();
-					Die d2 = new Die();
-					int movement = (d1.rollDie() + d2.rollDie());
-					updatePlayerPosition(movement, currentPlayer);
-					for (Square square : board.getSquares()) {
-						if (square.getPosition() == currentPlayer.getPosition()) {
-							currentSquare = square.getName();
-						}
-					}
-					System.out.println("You rolled a " + movement + ", you have landed on " + currentSquare);
+					rollDice();
 					break;
 				case 2:
 					sellBusiness();
@@ -258,6 +261,20 @@ public class Game {
 		} while (!done);
 	}
 
+	public void rollDice() {
+		Die d1 = new Die();
+		Die d2 = new Die();
+		int movement = (d1.rollDie() + d2.rollDie());
+		updatePlayerPosition(movement, currentPlayer);
+		for (Square square : board.getSquares()) {
+			if (square.getPosition() == currentPlayer.getPosition()) {
+				currentSquare = square.getName();
+			}
+		}
+		System.out.println("You rolled a " + movement + ", you have landed on " + currentSquare);
+		//logic for square and then advance current player!
+	}
+
 	/**
 	 * allows player to sell owned businesses
 	 */
@@ -266,15 +283,15 @@ public class Game {
 
 		String businessSelect;
 		currentPlayer.displayOwnedSquares();
-		if (currentPlayer.getOwnedSquares().size() > 0) {
+		if (currentPlayer.getOwnedCompanies().size() > 0) {
 
 			System.out.println("Type the name of the property you would like to sell, or type 'back' to go back.");
 			do {
 				try {
 					businessSelect = scanner.next();
 					// checks player owns the business they've named
-					for (int i = 0; i < currentPlayer.getOwnedSquares().size(); i++) {
-						if (currentPlayer.getOwnedSquares().get(i).getName().equalsIgnoreCase(businessSelect)) {
+					for (int i = 0; i < currentPlayer.getOwnedCompanies().size(); i++) {
+						if (currentPlayer.getOwnedCompanies().get(i).getName().equalsIgnoreCase(businessSelect)) {
 							doneSellBusiness = confirmSellBusiness(doneSellBusiness, i);
 							// allows player to go back if they type 'back'
 						} else if (businessSelect.equalsIgnoreCase("back")) {
@@ -307,34 +324,34 @@ public class Game {
 		boolean confirmSellBusiness = false;
 		String confirm;
 		do {
-			System.out.println("Are you sure you would like to sell " + currentPlayer.getOwnedSquares().get(i).getName()
+			System.out.println("Are you sure you would like to sell " + currentPlayer.getOwnedCompanies().get(i).getName()
 					+ "(Y/N)?");
 			try {
 				confirm = scanner.next();
 				switch (confirm) {
 				case "Y":
 				case "y":
-					Square square = null;
+					Company company = null;
 					for (int j = 0; j < board.getSquares().size(); j++) {
 
-						if (currentPlayer.getOwnedSquares().get(i).getName()
+						if (currentPlayer.getOwnedCompanies().get(i).getName()
 								.equals(board.getSquares().get(j).getName())) {
-							square = board.getSquares().get(j);
+							company = (Company)board.getSquares().get(j);
 						}
 					}
-					if (currentPlayer.getOwnedSquares().get(i).getName().equals(square.getName())) {
-						currentPlayer.setResource(currentPlayer.getResource() + square.getValue());
-						square.setHasCampus(false);
-						System.out.println("You have sold " + square.getName() + " for " + square.getValue()
+					if (currentPlayer.getOwnedCompanies().get(i).getName().equals(company.getName())) {
+						currentPlayer.setResource(currentPlayer.getResource() + company.getValue());
+						company.setHasCampus(false);
+						System.out.println("You have sold " + company.getName() + " for " + company.getValue()
 								+ " and now have " + currentPlayer.getResource());
-						currentPlayer.getOwnedSquares().remove(i);
+						currentPlayer.getOwnedCompanies().remove(i);
 						System.out.println("Would you like to sell another business? (Y/N)");
 						try {
 							confirm = scanner.next();
 							switch (confirm) {
 							case "Y":
 							case "y":
-								if (currentPlayer.getOwnedSquares().size() == 0) {
+								if (currentPlayer.getOwnedCompanies().size() == 0) {
 									System.out.println("Looks like you don't have any businesses left to sell!");
 									doneSellProperty = true;
 									break;
@@ -379,24 +396,29 @@ public class Game {
 	}
 
 	/**
-	 * is called when someone goes below zero (paying rent/tax etc. on squares); may
-	 * wish to add the value of properties to this?
-	 * 
-	 * @return
+	 * is called when someone goes below zero (paying rent/tax etc. on squares); displays list of final resources for players and names a winner
 	 */
 	private void endGame(Player currentPlayer) {
+		String winner = currentPlayer.getName();
+		int highestResources = currentPlayer.getTotalResources();
+
 		System.out.println(currentPlayer.getName() + " has run out of money; game over!");
 		playerList.sort(Comparator.comparing(Player::getResource));
 		for (Player player : playerList) {
-			System.out.println(player.getName() + ": " + player.getResource());
+			System.out.println(player.getName() + ": " + player.getTotalResources());
+			if (player.getTotalResources() > highestResources){
+				winner = player.getName();
+				highestResources = player.getTotalResources();
+			}
 		}
+		System.out.println("The winner is " + winner + ". Congratulations!");
 	}
 
 	/**
 	 * updates the player position after they move
 	 * 
-	 * @param movement
-	 * @param player
+	 * @param movement (equates to dice roll in rollDice)
+	 * @param player (this is the current player)
 	 */
 	public void updatePlayerPosition(int movement, Player player) {
 		if ((player.getPosition() + movement) <= 20) {
@@ -449,21 +471,21 @@ public class Game {
 		String field;
 		int numberOwned = 0;
 		int numberInField = 0;
-		if (currentPlayer.getOwnedSquares().size() > 0) {
+		if (currentPlayer.getOwnedCompanies().size() > 0) {
 			do {
 				currentPlayer.displayOwnedSquares();
 				System.out.println(
 						"Type the name of the business you would like to grow and press return, or type 'back' to go back!");
 				try {
 					business = scanner.next();
-					for (Square square : currentPlayer.getOwnedSquares()) {
-						if (business.equalsIgnoreCase(square.getName())) {
-							System.out.println("Are you sure you would like to grow " + square.getName() + "?(Y/N)");
-							field = square.getField();
-							for (Square ownedSquare : currentPlayer.getOwnedSquares()) {
+					for (Company company : currentPlayer.getOwnedCompanies()) {
+						if (business.equalsIgnoreCase(company.getName())) {
+							System.out.println("Are you sure you would like to grow " + company.getName() + "?(Y/N)");
+							field = company.getField();
+							for (Square ownedSquare : currentPlayer.getOwnedCompanies()) {
 								// numberOwned keeps track of the number of businesses in a field the player
 								// owns
-								if (ownedSquare.getField().equals(square.getField())) {
+								if (ownedSquare.getField().equals(company.getField())) {
 									numberOwned += 1;
 								}
 							}
@@ -497,11 +519,11 @@ public class Game {
 												// cost to build 100, may change this?
 												if (currentPlayer.getResource() >= 100) {
 													// prevents user from building more than four offices for a business
-													if (square.getNumberOfOffices() < 4) {
-														square.setNumberOfOffices(square.getNumberOfOffices() + 1);
+													if (company.getNumberOfOffices() < 4) {
+														company.setNumberOfOffices(company.getNumberOfOffices() + 1);
 														currentPlayer.setResource(currentPlayer.getResource() - 100);
 														System.out.println("OK, an office has now been built for "
-																+ square.getName()
+																+ company.getName()
 																+ ". Would you like to grow another business?(Y/N)");
 														try {
 															developAnother = scanner.next();
@@ -540,14 +562,14 @@ public class Game {
 											case "campus":
 												// cost to build 300, could change this?
 												if (currentPlayer.getResource() >= 300) {
-													if (!square.isHasCampus()) {
+													if (!company.isHasCampus()) {
 														// must have four offices to place a campus
-														if (square.getNumberOfOffices() == 4) {
+														if (company.getNumberOfOffices() == 4) {
 															currentPlayer
 																	.setResource(currentPlayer.getResource() - 300);
-															square.setHasCampus(true);
+															company.setHasCampus(true);
 															System.out.println("OK, a campus has now been built for "
-																	+ square.getName() + ". You now have "
+																	+ company.getName() + ". You now have "
 																	+ currentPlayer.getResource()
 																	+ " resources. Would you like to develop another property?(Y/N)");
 															try {

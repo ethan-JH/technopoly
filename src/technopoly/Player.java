@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  */
 public class Player {
-	private ArrayList<Square> ownedSquares = new ArrayList<Square>();
+	private ArrayList<Company> ownedCompanies = new ArrayList<>();
 	private int position;
 	private String name;
 	private int playerNumber;
@@ -28,23 +28,32 @@ public class Player {
 	}
 
 	public void displayOwnedSquares() {
-		if (ownedSquares.size() > 0) {
+		if (ownedCompanies.size() > 0) {
 			System.out.println("You currently own the following fields: ");
-			for (Square square : ownedSquares) {
-				System.out.println(" " + square.getName());
+			for (Company company : ownedCompanies) {
+				System.out.println(" " + company.getName());
 			}
 		} else {
 			System.out.println("You currently own zero fields.");
 		}
 	}
+
+	public int getTotalResources(){
+		int total = 0;
+		for(Company company: ownedCompanies){
+			total += company.getValue();
+		}
+		total += resource;
+		return resource;
+	}
 	
 
-	public ArrayList<Square> getOwnedSquares() {
-		return ownedSquares;
+	public ArrayList<Company> getOwnedCompanies() {
+		return ownedCompanies;
 	}
 
-	public void setOwnedSquares(ArrayList<Square> ownedSquares) {
-		this.ownedSquares = ownedSquares;
+	public void setOwnedCompanies(ArrayList<Company> ownedCompanies) {
+		this.ownedCompanies = ownedCompanies;
 	}
 
 	public void setResource(int resource) {
@@ -135,7 +144,7 @@ public class Player {
 	
 	/**
 	 * displays all of the resources owned by the player
-	 * @param Resource
+	 *
 	 */
 	public void displayResources() {
 		
