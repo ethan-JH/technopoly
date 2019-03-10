@@ -55,6 +55,10 @@ public class Game {
 		
 	}
 	
+	public Game(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
 	// methods
 	
 	/**
@@ -217,7 +221,6 @@ public class Game {
 				scanner.next();
 			}
 		} while (!correctNumberOfPlayers);
-		scanner.close();
 	}
 
 	/**
@@ -361,7 +364,7 @@ public class Game {
 						}
 					}
 					System.out.println("You rolled a " + movement + ", you have landed on " + currentSquare.getName());
-					currentSquare.sendSquareDetails(currentPlayer, playerList);
+					currentSquare.sendSquareDetails(currentPlayer, playerList, scanner);
 					System.out.println(currentPlayer.getName()+"'s turn is over!");
 					System.out.println();
 					endTurn();

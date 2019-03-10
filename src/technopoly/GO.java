@@ -4,6 +4,7 @@
 package technopoly;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Ethan
@@ -36,7 +37,7 @@ public class GO extends Square{
 	 * sends the details of the GO square to the player
 	 */
 	@Override
-	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 		System.out.println("You've made it to the Funding Round, investors have decided to give you another 200 Techcoins after passing this point.");
 	}
 

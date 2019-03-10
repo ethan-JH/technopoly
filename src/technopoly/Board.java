@@ -92,18 +92,7 @@ public class Board {
         System.out.println();
     }
     
-    /**
-     * selects the destination square of the player and sends the square details to the player
-     * @param position
-     * @param player
-     */
-    public void selectDestinationSquare(int position, Player player, ArrayList<Player> playerList) {
-        for (Square square : squares) {
-            if (square.getPosition() == player.getPosition()) {
-                square.sendSquareDetails(player, playerList);
-            }
-        }
-    }
+  
    
 }
 

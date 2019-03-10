@@ -68,8 +68,7 @@ public class Utility extends Square {
 	/**
 	 * sends the details of the utility square to the player
 	 */
-	@Override
-	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 
 		System.out.println(player.getName() + " has landed on a " + getName());
 
@@ -92,7 +91,7 @@ public class Utility extends Square {
 			}
 
 		} else if (getSquareOwnership() == 0) {
-			buyCompany(player);
+			buyCompany(player, scanner);
 		}
 
 	}
@@ -144,8 +143,8 @@ public class Utility extends Square {
 	 * 
 	 * @param player
 	 */
-	public void buyCompany(Player player) {
-		Scanner scanner = new Scanner(System.in);
+	public void buyCompany(Player player, Scanner scanner) {
+
 		String confirm;
 		boolean doneBuyCompany = false;
 
@@ -153,7 +152,7 @@ public class Utility extends Square {
 			System.out.println("This " + getName() + " is available for purchase for " + getValue() + " Techcoin");
 			System.out.println("Would you like to purchase this " + getName() + "? (Y/N)");
 			try {
-				confirm = scanner.nextLine();
+				confirm = scanner.next();
 				if (confirm.equalsIgnoreCase("y")) {
 
 					updateResource(-getValue(), player);
@@ -177,7 +176,6 @@ public class Utility extends Square {
 				System.out.println("Invalid input, enter Y or N for yes or no.");
 			}
 		} while (!doneBuyCompany);
-		scanner.close();
 	}
 
 }

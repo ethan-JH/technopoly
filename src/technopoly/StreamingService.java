@@ -73,7 +73,7 @@ public class StreamingService extends Company {
 	/**
 	 * sends details to player
 	 */
-	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 		System.out.println(player.getName() + " has landed on "+ getName()+" it is a "+ getField()+ " company and costs "+getValue());
 		
 		if (getSquareOwnership()==player.getPlayerNumber()) {	//check if player already owns square
@@ -91,7 +91,7 @@ public class StreamingService extends Company {
 				}
 			}
 		} else if (getSquareOwnership()==0 && player.getResource()>=getValue()) { //if square is unowned check if player has enough to buy square
-			buyCompany(player);
+			buyCompany(player, scanner);
 		} else { // player does not have enough to buy square
 			System.out.println("Sorry you don't have enough to buy this square, you only have "+player.getResource()+ " Techcoin.");
 		}
@@ -124,6 +124,8 @@ public class StreamingService extends Company {
 		player.setNumberOfStreamingServiceOwned(++numberOfStreamingOwned); // adds 1 Streaming when called
 		if (numberOfStreamingOwned==2) {
 			System.out.println("You own all of the "+ getField() +" companies. You can now begin developing offices and campuses.");
+		} else {
+			System.out.println("You own "+player.getNumberOfStreamingServiceOwned()+"/2 "+ getField() +" companies.");
 		}
 			
 	}
@@ -133,8 +135,8 @@ public class StreamingService extends Company {
 	 * 
 	 * @param player
 	 */
-	public void buyCompany(Player player) {
-		Scanner scanner = new Scanner(System.in);
+	public void buyCompany(Player player, Scanner scanner) {
+
 		String confirm;
 		boolean doneBuyCompany = false;
 
@@ -166,7 +168,7 @@ public class StreamingService extends Company {
 				System.out.println("Invalid input, enter Y or N for yes or no.");
 			}
 		} while (!doneBuyCompany);
-		scanner.close();
+		
 	}
 }
 	

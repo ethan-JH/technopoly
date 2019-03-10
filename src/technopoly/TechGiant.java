@@ -67,13 +67,13 @@ public class TechGiant extends Company {
 	/**
 	 * sends details to player
 	 */
-	public void sendSquareDetails(Player player,ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player,ArrayList<Player> playerList, Scanner scanner) {
 		System.out.println(player.getName() + " has landed on "+ getName()+" it is a "+ getField()+ " company and costs "+getValue());
 		
 		if (getSquareOwnership()==player.getPlayerNumber()) {	//check if player already owns square
 			System.out.println("You already own " + this.getName()+ ", no subscription required");
 		}else if (getSquareOwnership()!=0 && getSquareOwnership()!=player.getPlayerNumber()) {	// check if other player owns square
-			System.out.println(getName() + "is owned by Player "+ getSquareOwnership()+". There are "+ getNumberOfOffices()+" Offices and "+getNumberOfCampuses()+" Campuses. Pay the owner a subscription of "+ getSubscription() + " Techcoin.");
+			System.out.println(getName() + " is owned by Player "+ getSquareOwnership()+". There are "+ getNumberOfOffices()+" Offices and "+getNumberOfCampuses()+" Campuses. Pay the owner a subscription of "+ getSubscription() + " Techcoin.");
 			
 			for (Player owner : playerList) {
 				if (getSquareOwnership() == owner.getPlayerNumber()) {
@@ -85,7 +85,7 @@ public class TechGiant extends Company {
 				}
 			}
 		} else if (getSquareOwnership()==0 && player.getResource()>=getValue()) { // check if player has enough to buy square
-			buyCompany(player);
+			buyCompany(player, scanner);
 		} else { // player does not have enough to buy square
 			System.out.println("Sorry you don't have enough to buy this square, you only have "+player.getResource()+ " Techcoin.");
 		}
@@ -120,6 +120,8 @@ public class TechGiant extends Company {
 		player.setNumberOfTechGiantOwned(++numberOfTechGiantOwned); // adds 1 techgiant when called
 		if (numberOfTechGiantOwned==2) {
 			System.out.println("You own all of the "+ getField() +" companies. You can now begin developing offices and campuses.");
+		} else {
+			System.out.println("You own "+player.getNumberOfTechGiantOwned()+"/2 "+ getField() +" companies.");
 		}
 	}
 	
@@ -128,8 +130,8 @@ public class TechGiant extends Company {
 	 * 
 	 * @param player
 	 */
-	public void buyCompany(Player player) {
-		Scanner scanner = new Scanner(System.in);
+	public void buyCompany(Player player, Scanner scanner) {
+		
 		String confirm;
 		boolean doneBuyCompany = false;
 
@@ -161,7 +163,7 @@ public class TechGiant extends Company {
 				System.out.println("Invalid input, enter Y or N for yes or no.");
 			}
 		} while (!doneBuyCompany);
-		scanner.close();
+		
 	}
 
 }

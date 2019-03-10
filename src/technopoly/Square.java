@@ -1,6 +1,7 @@
 package technopoly;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * abstract class which holds details of Square objects
@@ -34,6 +35,8 @@ public abstract class Square {
 	public Square(String name, int position, int value, String field) {
 		this.name = name;
 		this.position = position;
+		this.value = value;
+		this.field = field;
 	}
 	
 	// methods
@@ -102,7 +105,7 @@ public abstract class Square {
 	 * sends details regarding each square when a player lands on it
 	 * @param player
 	 */
-	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList);
+	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner);
 	
 	/**
 	 * updates the resources of the player based on the square
@@ -111,7 +114,7 @@ public abstract class Square {
 	 */
 	public void updateResource(int value, Player player) {
 
-		int newResourceValue = player.getPlayerNumber();
+		int newResourceValue = player.getResource();
 		newResourceValue += value;
 		player.setResource(newResourceValue);
 

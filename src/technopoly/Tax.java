@@ -4,6 +4,7 @@
 package technopoly;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Ethan
@@ -36,8 +37,7 @@ public class Tax extends Square {
 	/**
 	 * sends details of the square and removes 200 resources from the player
 	 */
-	@Override
-	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 
 		System.out.println(player.getName() + " has been HACKED! The hackers have made off with 200 of your Techcoins!");
 		updateResource(TAX_COST, player);

@@ -4,6 +4,7 @@
 package technopoly;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Ethan
@@ -33,7 +34,7 @@ public class Holiday extends Square {
 	 * sends details of Holiday square to player when called
 	 */
 	@Override
-	public void sendSquareDetails(Player player, ArrayList<Player> playerList) {
+	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 		
 		System.out.println(player.getName() + " has landed on Holiday. Have a breather, you've earnt it.");
 
