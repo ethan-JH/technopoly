@@ -152,8 +152,11 @@ public class Game {
 		setFirstPlayer();
 		// print out a welcome message to all the players
 		welcomePlayers();
+		//generate the board
 		board.generateBoard();
+		//for testing purposes, remove
 		currentPlayer.getOwnedCompanies().add((Company)board.getSquares().get(1));
+		//display turn options to first player
 		displayTurnOptions();
 	}
 
