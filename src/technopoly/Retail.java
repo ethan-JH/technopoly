@@ -93,8 +93,9 @@ public class Retail extends Company {
 		
 		if(numberOfOffices <=3) {		// subscription fee for up to 3 houses
 			setSubscription(subscription+=(numberOfOffices*50));
-		}		
-		else { //fee for campuses - offices not included in this fee as when a campus is built offices are removed
+		}else if(numberOfOffices>=1 && numberOfCampuses>=1) { // subscription fee for having offices and hotels
+				setSubscription(subscription+=(numberOfOffices*50) + (numberOfCampuses*250));			
+		}else { //fee for campuses - offices not included in this fee as when a campus is built offices are removed
 			setSubscription(subscription+=(numberOfCampuses*250));	
 			}
 		return subscription;
