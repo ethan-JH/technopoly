@@ -19,7 +19,7 @@ public class Game {
 	private boolean confirmed = false;
 	private ArrayList<Player> playerList = new ArrayList<>();
 	private Player currentPlayer;
-	private Board board;
+	private Board board = new Board();
 	private String currentSquare;
 
 
@@ -34,16 +34,20 @@ public class Game {
 	 * requests the number of players, loops until this is confirmed
 	 */
 	public void requestNumberOfPlayers() {
-		System.out.println("How many people are playing? Choose 1, 2, 3 or 4!");
 		do {
+		System.out.println("How many people are playing? Choose 2, 3 or 4!");
 			try {
 				numberOfPlayers = scanner.nextInt();
-				System.out.println("Are you sure you would like to play with " + numberOfPlayers + " players? Y/N");
-				confirmNumberPlayers();
+				if(numberOfPlayers >= 2 && numberOfPlayers <= 4) {
+					System.out.println("Are you sure you would like to play with " + numberOfPlayers + " players? Y/N");
+					confirmNumberPlayers();
+				} else {
+					System.out.println("Sorry, you can only choose between 2 and 4 players!");
+				}
 
 			} catch (InputMismatchException e) {
 				System.out.println(
-						"Oops, that doesn't seem right. Please type 1, 2, 3 or 4 to select the number of players and press return!");
+						"Oops, that doesn't seem right. Please type 2, 3 or 4 to select the number of players and press return!");
 				scanner.next();
 			}
 		} while (!correctNumberOfPlayers);
@@ -148,7 +152,7 @@ public class Game {
 		setFirstPlayer();
 		// print out a welcome message to all the players
 		welcomePlayers();
-		generateBoard();
+		board.generateBoard();
 		currentPlayer.getOwnedCompanies().add((Company)board.getSquares().get(1));
 		displayTurnOptions();
 	}
@@ -156,7 +160,7 @@ public class Game {
 	public void welcomePlayers() {
 		System.out.print("Welcome, ");
 		for (int i = 0; i < playerList.size(); i++) {
-			if (i <= 2) {
+			if (i < (playerList.size() - 1)) {
 				System.out.print(playerList.get(i).getName() + ", ");
 			} else {
 				System.out.print("and" + playerList.get(i).getName());
@@ -166,49 +170,13 @@ public class Game {
 	}
 
 	public void setFirstPlayer() {
-		for (Player element : playerList) {
-			if (element.getPlayerNumber() == 1) {
-				currentPlayer = element;
+		for (Player player : playerList) {
+			if (player.getPlayerNumber() == 1) {
+				currentPlayer = player;
 			}
 		}
 	}
 
-	/**
-	 * generates the board, with squares of appropriate values and fields
-	 */
-	public void generateBoard() {
-
-		board = new Board();
-		ArrayList<Square> squares = new ArrayList<>();
-		// currently 'value' is used to store both the cost to purchase and the amount
-		// someone gains/loses
-		// from stopping there - change?
-
-		squares.add(new GO("Funding Round", 1, 200, "N/A"));
-		squares.add(new StreamingService("Netflix", 2, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12));
-		squares.add(new Utility("TECHCOIN MINE", 3, 150, "Utility", 0, 30));
-		squares.add(new StreamingService("Hulu", 4, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12));
-		squares.add(new Tax("Digital Tax", 5, 200, "Digital Tax"));
-		squares.add(new Chance("Chance", 6, 0, "Chance", "Chance"));
-		squares.add(new Retail("Ebay", 7, 140, "Retail", 0, 0, 0, false, 105, 105, 28));
-		squares.add(new Utility("DATA CENTRE", 8, 150, "DATA CENTRE", 0, 30));
-		squares.add(new Retail("Alibaba", 9, 140, "Retail", 0, 0, 0, false, 105, 105, 28));
-		squares.add(new Retail("Amazon", 10, 160, "Retail", 0, 0, 0, false, 120, 120, 32));
-		squares.add(new Holiday("Holiday", 11, 0, "Holiday"));
-		squares.add(new SocialMedia("Twitter", 12, 260, "Social Media", 0, 0, 0, false, 195, 195, 52));
-		squares.add(new SocialMedia("Instagram", 13, 260, "Social Media", 0, 0, 0, false, 195, 195, 52));
-		squares.add(new Utility("TECHCOIN MINE", 14, 150, "TECHCOIN MINE", 0, 30));
-		squares.add(new SocialMedia("Facebook", 15, 280, "Social Media", 0, 0, 0, false, 210, 210, 56));
-		squares.add(new Chance("Chance", 16, 0, "Chance", "Chance"));
-		squares.add(new Tax("Hacked", 17, 100, "Hacked"));
-		squares.add(new TechGiant("Apple", 18, 350, "Tech Giant", 0, 0, 0, false, 265, 265, 70));
-		squares.add(new Utility("DATA CENTRE", 19, 150, "DATA CENTRE", 0, 30));
-		squares.add(new TechGiant("Microsoft", 20, 400, "Tech Giant", 0, 0, 0, false, 300, 300, 80));
-		board.setSquares(squares);
-
-		board.setSquares(squares);
-
-	}
 
 	/**
 	 * displays the current player's turn options at the beginning of their turn.
@@ -218,7 +186,7 @@ public class Game {
 		boolean done = false;
 		int response;
 
-		do { // do we want something to load games?
+		do {
 			System.out.println("Hello " + currentPlayer.getName() + " , please choose an option:");
 			System.out.println("1. Roll dice");
 			System.out.println("2. Sell property");
@@ -264,15 +232,33 @@ public class Game {
 	public void rollDice() {
 		Die d1 = new Die();
 		Die d2 = new Die();
+		Square destinationSquare = null;
 		int movement = (d1.rollDie() + d2.rollDie());
 		updatePlayerPosition(movement, currentPlayer);
 		for (Square square : board.getSquares()) {
 			if (square.getPosition() == currentPlayer.getPosition()) {
 				currentSquare = square.getName();
+				destinationSquare = square;
 			}
 		}
 		System.out.println("You rolled a " + movement + ", you have landed on " + currentSquare);
-		//logic for square and then advance current player!
+		destinationSquare.sendSquareDetails(currentPlayer);
+
+		advanceCurrentPlayer();
+
+
+	}
+
+	public void advanceCurrentPlayer() {
+		if(currentPlayer.getPlayerNumber() == playerList.size()){
+			currentPlayer = playerList.get(0);
+		} else{
+			for(Player player: playerList){
+				if(player.getPlayerNumber() == (currentPlayer.getPlayerNumber() + 1)){
+					currentPlayer = player;
+				}
+			}
+		}
 	}
 
 	/**
@@ -461,7 +447,6 @@ public class Game {
 	 * allows player to build offices or campuses
 	 */
 	public void growBusiness() {
-		// test this
 		boolean doneGrowBusiness = false;
 		boolean confirmed = false;
 		String business;
