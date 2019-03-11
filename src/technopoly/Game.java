@@ -23,30 +23,14 @@ public class Game {
 	private boolean confirmed = false;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 	private Player currentPlayer;
-	private Board board;
+	private Board board = new Board();
 	private Square currentSquare;
-	
-	// instantiate squares
-	private GO fundingRound = new GO("Funding Round", 1, 200, "GO");
-	private StreamingService netflix = new StreamingService("Netflix", 2, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);
-	private Utility mine1 = new Utility("TECHCOIN MINE", 3, 150, "Utility", 0, 30); 
-	private StreamingService hulu = new StreamingService("Hulu", 4, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);
-	private Tax digitalTax = new Tax("Digital Tax", 5, 200, "Tax");
-	private Chance chance1 = new Chance("Chance", 6, 0, "Chance", "Chance");
-	private Retail ebay = new Retail("Ebay", 7, 140, "Retail", 0, 0, 0, false, 105, 105, 28);
-	private Utility dataCentre1 = new Utility("DATA CENTRE", 8, 150, "DATA CENTRE", 0, 30);
-	private Retail alibaba = new Retail("Alibaba", 9, 140, "Retail", 0, 0, 0, false, 105, 105, 28);
-	private Retail amazon = new Retail("Amazon", 10, 160, "Retail", 0, 0, 0, false, 120, 120, 32);
-	private Holiday holiday = new Holiday("Holiday", 11, 0, "Holiday");
-	private SocialMedia twitter = new SocialMedia("Twitter", 12, 260, "Social Media", 0, 0, 0, false, 195, 195, 52);
-	private SocialMedia instagram = new SocialMedia("Instagram", 13, 260, "Social Media", 0, 0, 0, false, 195, 195, 52);
-	private Utility mine2 = new Utility("TECHCOIN MINE", 14, 150, "TECHCOIN MINE", 0, 30);
-	private SocialMedia facebook = new SocialMedia("Facebook", 15, 280, "Social Media", 0, 0, 0, false, 210, 210, 56);
-	private Chance chance2 = new Chance("Chance", 16, 0, "Chance", "Chance");
-	private Tax hacked = new Tax("Hacked", 17, 100, "Hacked");
-	private TechGiant apple = new TechGiant("Apple", 18, 350, "Tech Giant", 0, 0, 0, false, 265, 265, 70);
-	private Utility dataCentre2 = new Utility("DATA CENTRE", 19, 150, "DATA CENTRE", 0, 30);
-	private TechGiant microsoft = new TechGiant("Microsoft", 20, 400, "Tech Giant", 0, 0, 0, false, 300, 300, 80);
+	private StreamingService streamingService = new StreamingService();
+	private Retail retail = new Retail();
+	private SocialMedia socialMedia = new SocialMedia();
+	private TechGiant techGiant = new TechGiant();
+
+
 	
 	/**
 	 * default constructor
@@ -240,6 +224,12 @@ public class Game {
 			do {
 				try {
 					name = scanner.next();
+					for(Player player: playerList){
+						if(name.equals(player.getName())){
+							System.out.println("Sorry, that name's already been taken! Try to make it distinctive!");
+							name = scanner.next();
+						}
+					}
 
 					try {
 						do {
@@ -292,45 +282,12 @@ public class Game {
 			}
 		}
 		System.out.print("...to Technopoly!! \n\n");
-		generateBoard();
+
+		//for testing, remove
 		currentPlayer.getOwnedSquares().add(board.getSquares().get(1));
 		displayTurnOptions();
 	}
 
-	/**
-	 * generates the board, with squares of appropriate values and fields
-	 */
-	public void generateBoard() {
-
-		board = new Board();
-		ArrayList<Square> squares = new ArrayList<Square>();
-		
-		// add squares to arrayList
-		squares.add(fundingRound);
-		squares.add(netflix);
-		squares.add(mine1);
-		squares.add(hulu);
-		squares.add(digitalTax);
-		squares.add(chance1);
-		squares.add(ebay);
-		squares.add(dataCentre1);
-		squares.add(alibaba);
-		squares.add(amazon);
-		squares.add(holiday);
-		squares.add(twitter);
-		squares.add(instagram);
-		squares.add(mine2);
-		squares.add(facebook);
-		squares.add(chance2);
-		squares.add(hacked);
-		squares.add(apple);
-		squares.add(dataCentre2);
-		squares.add(microsoft);
-		
-		// set board
-		board.setSquares(squares);
-
-	}
 
 	/**
 	 * displays the current player's turn options at the beginning of their turn.
@@ -595,23 +552,23 @@ public class Game {
 					
 					if(currentPlayer.getNumberOfStreamingServiceOwned() == 2 && company.equalsIgnoreCase("Netflix") || 
 							company.equalsIgnoreCase("Hulu")) {
-						officeCost = netflix.getOfficeCost();
-						campusCost = netflix.getCampusCost(); 
+						officeCost = streamingService.getOfficeCost();
+						campusCost = streamingService.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfRetailOwned() == 3 && company.equalsIgnoreCase("Ebay") || 
 							company.equalsIgnoreCase("Alibaba") || company.equalsIgnoreCase("Amazon")) {
-						officeCost = ebay.getOfficeCost();
-						campusCost = ebay.getCampusCost(); 
+						officeCost = retail.getOfficeCost();
+						campusCost = retail.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfSocialMediaOwned() == 3 && company.equalsIgnoreCase("Twitter") || 
 							company.equalsIgnoreCase("Instagram") || company.equalsIgnoreCase("Facebook")) {
-						officeCost = twitter.getOfficeCost();
-						campusCost = twitter.getCampusCost(); 
+						officeCost = socialMedia.getOfficeCost();
+						campusCost = socialMedia.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfTechGiantOwned() == 2 && company.equalsIgnoreCase("Apple") || 
 							company.equalsIgnoreCase("Microsoft")) {
-						officeCost = apple.getOfficeCost();
-						campusCost = microsoft.getCampusCost();
+						officeCost = techGiant.getOfficeCost();
+						campusCost = techGiant.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
 					} else if (company.equalsIgnoreCase("back")) {
 						doneGrowBusiness = true;

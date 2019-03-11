@@ -17,7 +17,10 @@ public class TechGiant extends Company {
 	private int officeCost;
 	private int campusCost;
 	private int subscription; 
-	
+
+	public TechGiant(){
+
+	}
 	/**
 	 * @param name
 	 * @param position
