@@ -10,8 +10,11 @@ public class Retail extends Company {
 	private int campusCost;
 	private int subscription;
 
-	/**
-	 * 
+
+	public Retail(){
+
+	}	/**
+	 *
 	 * @param name
 	 * @param position
 	 * @param value
@@ -24,6 +27,7 @@ public class Retail extends Company {
 	 * @param officeCost
 	 * @param subscription
 	 */
+
 	public Retail(String name, int position, int value, String field, int squareOwnership, int numberOfOffices,
 			int numberOfCampuses, boolean hasCampus, int campusCost, int officeCost, int subscription) {
 		super(name, position, value, field, squareOwnership, numberOfOffices, numberOfCampuses, hasCampus);
@@ -135,7 +139,7 @@ public class Retail extends Company {
 	public void buyCompany(Player player, Scanner scanner) {
 		String confirm;
 		boolean doneBuyCompany = false;
-
+		Board board = new Board();
 		do {
 			System.out.println(getName() + " is available for purchase for " + getValue() + " Techcoin");
 			System.out.println("Would you like to purchase " + getName() + "? (Y/N)");
@@ -146,6 +150,12 @@ public class Retail extends Company {
 					updateResource(-getValue(), player);
 					setSquareOwnership(player.getPlayerNumber());
 					updateRetailOwned(player);
+					//add to player owned properties array
+					for(Square square: board.getSquares()){
+						if(square.getName().equals(this.getName())){
+							player.getOwnedSquares().add(square);
+						}
+					}
 					System.out.println(getName() + " is now owned by " + player.getName() + ". You now have "
 							+ player.getResource() + " Techcoin");
 					System.out.println();

@@ -147,7 +147,8 @@ public class Utility extends Square {
 
 		String confirm;
 		boolean doneBuyCompany = false;
-
+		Board board = new Board();
+		ArrayList<Square> newProperty = new ArrayList<>();
 		do {
 			System.out.println("This " + getName() + " is available for purchase for " + getValue() + " Techcoin");
 			System.out.println("Would you like to purchase this " + getName() + "? (Y/N)");
@@ -159,6 +160,13 @@ public class Utility extends Square {
 					setSquareOwnership(player.getPlayerNumber());
 					updateUtilitiesOwned(player);
 					multiplySubscription(player);
+					for(Square square: board.getSquares()){
+						if(square.getName().equals(this.getName())){
+							newProperty = player.getOwnedSquares();
+							newProperty.add(square);
+							player.setOwnedSquares(newProperty);
+						}
+					}
 					System.out.println("This " + getName() + " is now owned by " + player.getName() + ". You now have "
 							+ player.getResource() + " Techcoin");
 					doneBuyCompany = true;

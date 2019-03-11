@@ -138,6 +138,8 @@ public class SocialMedia extends Company {
 		
 		String confirm;
 		boolean doneBuyCompany = false;
+		Board board = new Board();
+		ArrayList<Square> newProperty = new ArrayList<>();
 
 		do {
 			System.out.println(getName() + " is available for purchase for " + getValue() + " Techcoin");
@@ -149,6 +151,14 @@ public class SocialMedia extends Company {
 					updateResource(-getValue(), player);
 					setSquareOwnership(player.getPlayerNumber());
 					updateSocialOwned(player);
+					//add to player owned properties array
+					for(Square square: board.getSquares()){
+						if(square.getName().equals(this.getName())){
+							newProperty = player.getOwnedSquares();
+							newProperty.add(square);
+							player.setOwnedSquares(newProperty);
+						}
+					}
 					System.out.println(getName() + " is now owned by " + player.getName() + ". You now have "
 							+ player.getResource() + " Techcoin");
 					System.out.println();

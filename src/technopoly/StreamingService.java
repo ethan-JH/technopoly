@@ -19,6 +19,10 @@ public class StreamingService extends Company {
 	
 	
 
+
+	public StreamingService(){
+
+	}
 	/**
 	 * @param name
 	 * @param position
@@ -28,9 +32,9 @@ public class StreamingService extends Company {
 	 * @param numberOfOffices
 	 * @param numberOfCampuses
 	 * @param hasCampus
-	 * @param officeCost 
-	 * @param campusCost 
-	 * @param subscription 
+	 * @param officeCost
+	 * @param campusCost
+	 * @param subscription
 	 */
 	public StreamingService(String name, int position, int value, String field, int squareOwnership,
 			int numberOfOffices, int numberOfCampuses, boolean hasCampus, int officeCost, int campusCost, int subscription) {
@@ -139,7 +143,7 @@ public class StreamingService extends Company {
 
 		String confirm;
 		boolean doneBuyCompany = false;
-
+		Board board = new Board();
 		do {
 			System.out.println(getName() + " is available for purchase for " + getValue() + " Techcoin");
 			System.out.println("Would you like to purchase " + getName() + "? (Y/N)");
@@ -150,6 +154,12 @@ public class StreamingService extends Company {
 					updateResource(-getValue(), player);
 					setSquareOwnership(player.getPlayerNumber());
 					updateStreamingOwned(player);
+					//add to player owned properties array
+					for(Square square: board.getSquares()){
+						if(square.getName().equals(this.getName())){
+							player.getOwnedSquares().add(square);
+						}
+					}
 					System.out.println(getName() + " is now owned by " + player.getName() + ". You now have "
 							+ player.getResource() + " Techcoin");
 					System.out.println();
