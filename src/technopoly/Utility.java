@@ -133,8 +133,9 @@ public class Utility extends Square {
 	 */
 	public void multiplySubscription(Player player) {
 
-		int numberUtilitiesOwned = player.getNumberOfUtilitiesOwned();
-		setSubscription(getSubscription() * numberUtilitiesOwned);
+		int newSubscription = 30 * player.getNumberOfUtilitiesOwned();
+		setSubscription(newSubscription);
+		
 
 	}
 
@@ -161,7 +162,7 @@ public class Utility extends Square {
 					updateUtilitiesOwned(player);
 					multiplySubscription(player);
 					for(Square square: board.getSquares()){
-						if(square.getName().equals(this.getName())){
+						if(square.getPosition() == this.getPosition()){
 							newProperty = player.getOwnedSquares();
 							newProperty.add(square);
 							player.setOwnedSquares(newProperty);

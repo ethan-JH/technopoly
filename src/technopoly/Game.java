@@ -282,9 +282,6 @@ public class Game {
 			}
 		}
 		System.out.print("...to Technopoly!! \n\n");
-
-		//for testing, remove
-		currentPlayer.getOwnedSquares().add(board.getSquares().get(1));
 		displayTurnOptions();
 	}
 
@@ -422,6 +419,7 @@ public class Game {
 						System.out.println("You have sold " + square.getName() + " for " + square.getValue()
 								+ " and now have " + currentPlayer.getResource());
 						currentPlayer.getOwnedSquares().remove(i);
+						square.setSquareOwnership(0);
 						System.out.println("Would you like to sell another business? (Y/N)");
 						try {
 							confirm = scanner.next();
@@ -474,8 +472,7 @@ public class Game {
 	}
 
 	/**
-	 * is called when someone goes below zero (paying rent/tax etc. on squares); may
-	 * wish to add the value of properties to this?
+	 * is called when someone goes below zero (paying rent/tax etc. on squares)
 	 * 
 	 * @return
 	 */
@@ -548,25 +545,25 @@ public class Game {
 			do {
 				System.out.println("Enter the name of the company you'd like to build on, or enter 'back' to go back: ");
 				try {
-					company = scanner.nextLine();
+					company = scanner.next();
 					
-					if(currentPlayer.getNumberOfStreamingServiceOwned() == 2 && company.equalsIgnoreCase("Netflix") || 
-							company.equalsIgnoreCase("Hulu")) {
+					if(currentPlayer.getNumberOfStreamingServiceOwned() == 2 && (company.equalsIgnoreCase("Netflix") || 
+							company.equalsIgnoreCase("Hulu"))) {
 						officeCost = streamingService.getOfficeCost();
 						campusCost = streamingService.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
-					} else if (currentPlayer.getNumberOfRetailOwned() == 3 && company.equalsIgnoreCase("Ebay") || 
-							company.equalsIgnoreCase("Alibaba") || company.equalsIgnoreCase("Amazon")) {
+					} else if (currentPlayer.getNumberOfRetailOwned() == 3 && (company.equalsIgnoreCase("Ebay") || 
+							company.equalsIgnoreCase("Alibaba") || company.equalsIgnoreCase("Amazon"))) {
 						officeCost = retail.getOfficeCost();
 						campusCost = retail.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
-					} else if (currentPlayer.getNumberOfSocialMediaOwned() == 3 && company.equalsIgnoreCase("Twitter") || 
-							company.equalsIgnoreCase("Instagram") || company.equalsIgnoreCase("Facebook")) {
+					} else if (currentPlayer.getNumberOfSocialMediaOwned() == 3 && (company.equalsIgnoreCase("Twitter") || 
+							company.equalsIgnoreCase("Instagram") || company.equalsIgnoreCase("Facebook"))) {
 						officeCost = socialMedia.getOfficeCost();
 						campusCost = socialMedia.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
-					} else if (currentPlayer.getNumberOfTechGiantOwned() == 2 && company.equalsIgnoreCase("Apple") || 
-							company.equalsIgnoreCase("Microsoft")) {
+					} else if (currentPlayer.getNumberOfTechGiantOwned() == 2 && (company.equalsIgnoreCase("Apple") || 
+							company.equalsIgnoreCase("Microsoft"))) {
 						officeCost = techGiant.getOfficeCost();
 						campusCost = techGiant.getCampusCost();
 						buildCompany(company, officeCost, campusCost);
@@ -660,10 +657,12 @@ public class Game {
 			player.addTotalResources();
 		}
 		
-		playerList.sort(Comparator.comparing(Player::getResource));
+		// sorts players from highest to lowest total resources
+		playerList.sort(Comparator.comparing(Player::getResource).reversed());
+		
 		System.out.println("Congratulations "+ playerList.get(0).getName() +", you won Technopoly!");
 		for (Player player : playerList) {
-			System.out.println(playerPlacing + ". " + player.getName() + ": " + player.getResource() + " Techcoins and " + player.getOwnedSquares().size() + " companies");
+			System.out.println(playerPlacing + ". " + player.getName() + " Net Worth: " + player.getResource() + " Techcoins");
 			playerPlacing++;
 		}
 		System.out.println("Thanks for playing Technopoly!");
@@ -698,4 +697,5 @@ public class Game {
 		}
 		
 	}
+	
 }

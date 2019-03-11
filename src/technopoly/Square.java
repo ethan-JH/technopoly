@@ -15,6 +15,7 @@ public abstract class Square {
 	private int position;
 	private int value;
 	private String field;
+	private int squareOwnership;
 	
 	// constructors
 	
@@ -119,4 +120,22 @@ public abstract class Square {
 		player.setResource(newResourceValue);
 
 	}
+	
+	public void updateSquareOwnership(int ownerNumber) {
+		
+	}
+
+	/**
+	 * @return the squareOwnership
+	 */
+	public int getSquareOwnership() {
+		return squareOwnership;
+	}
+
+	/**
+	 * @param squareOwnership the squareOwnership to set
+	 */
+	public void setSquareOwnership(int squareOwnership) {
+		this.squareOwnership = squareOwnership;
+	}	
 }

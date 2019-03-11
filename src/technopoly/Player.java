@@ -312,9 +312,11 @@ public class Player {
 	 * only to be used at the end of the game
 	 */
 	public void addTotalResources() {
+		int totalResource = getResource();
 		for(Square square : ownedSquares) {
-			setResource(getResource() + square.getValue());
+			totalResource += square.getValue();
 		}
+		setResource(totalResource);
 	}
 	
 }
