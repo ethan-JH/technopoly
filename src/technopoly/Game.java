@@ -547,22 +547,26 @@ public class Game {
 							company.equalsIgnoreCase("Hulu"))) {
 						officeCost = 40;
 						campusCost = 40;
+						doneGrowBusiness=true;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfRetailOwned() == 3 && (company.equalsIgnoreCase("Ebay") || 
 							company.equalsIgnoreCase("Alibaba") || company.equalsIgnoreCase("Amazon"))) {
 						officeCost = 105;
 						campusCost = 105;
+						doneGrowBusiness = true;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfSocialMediaOwned() == 3 && (company.equalsIgnoreCase("Twitter") || 
 							company.equalsIgnoreCase("Instagram") || company.equalsIgnoreCase("Facebook"))) {
 						officeCost = 195;
 						campusCost = 195;
+						doneGrowBusiness = true;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfTechGiantOwned() == 2 && (company.equalsIgnoreCase("Apple") || 
 							company.equalsIgnoreCase("Microsoft"))) {
 						officeCost = 300;
 						campusCost = 300;
 						buildCompany(company, officeCost, campusCost);
+						doneGrowBusiness = true;
 					} else if (company.equalsIgnoreCase("back")) {
 						doneGrowBusiness = true;
 					} else {
@@ -609,6 +613,7 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(newNumberOfOffices, 0);
 									System.out.println("You now have " + currentPlayer.getOwnedCompanies().get(loop).getNumberOfOffices() + "/4 offices at " + company);
 									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
+									doneBuildCompany =true;
 								}
 								
 							} else {
@@ -626,6 +631,7 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(4, campusNumber);
 									System.out.println("You now have a campus on " + company + "! You can't build anymore on this company.");
 									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
+									doneBuildCompany = true;
 								}
 							} else if(currentPlayer.getOwnedCompanies().get(loop).isHasCampus()){
 								System.out.println("You already have a campus on " + company + "! You can't build anymore on this company.");
