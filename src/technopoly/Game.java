@@ -347,17 +347,21 @@ public class Game {
         Die d2 = new Die();
         int movement = (d1.rollDie() + d2.rollDie());
         updatePlayerPosition(movement, currentPlayer);
-        for (Square square : board.getSquares()) {
-            if (square.getPosition() == currentPlayer.getPosition()) {
-                currentSquare = square;
-            }
-        }
+        updateCurrentSquare();
         System.out.println("You rolled a " + movement + ", you have landed on " + currentSquare.getName());
         currentSquare.sendSquareDetails(currentPlayer, playerList, scanner);
         System.out.println(currentPlayer.getName() + "'s turn is over!");
         System.out.println();
         endTurn();
         return;
+    }
+
+    public void updateCurrentSquare() {
+        for (Square square : board.getSquares()) {
+            if (square.getPosition() == currentPlayer.getPosition()) {
+                currentSquare = square;
+            }
+        }
     }
 
     /**
