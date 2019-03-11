@@ -156,9 +156,6 @@ public class Game {
 	 * requests the number of players, loops until this is confirmed
 	 */
 	public void requestNumberOfPlayers() {
-		
-		String confirm;
-
 		System.out.println("How many people are playing? Choose 2, 3 ,4 or 5!");
 		do {
 			try {
@@ -166,36 +163,7 @@ public class Game {
 				
 				if( numberOfPlayers>= 2 && numberOfPlayers <= 5) {
 					System.out.println("Are you sure you would like to play with " + numberOfPlayers + " players? Y/N");
-					do {
-						try {
-							confirm = scanner.next();
-
-							switch (confirm) {
-							case "Y":
-								correctNumberOfPlayers = true;
-								confirmed = true;
-								requestPlayerNames(numberOfPlayers);
-								break;
-							case "y":
-								correctNumberOfPlayers = true;
-								confirmed = true;
-								requestPlayerNames(numberOfPlayers);
-								break;
-							case "N":
-								requestNumberOfPlayers();
-								break;
-							case "n":
-								requestNumberOfPlayers();
-								break;
-							default:
-								System.out.println(
-										"Sorry, that's not a valid response! Type Y for yes or N for no and press return.");
-								break;
-							}
-						} catch (InputMismatchException e) {
-							System.out.println("Oops, that doesn't seem right. Please type Y for yes or N for no and press return!");
-						}
-					} while (!confirmed);
+					confirmNumberOfPlayers();
 				} else {
 					System.out.println("Number of players can only be 2, 3, 4, or 5. Try again!");
 				}
@@ -205,6 +173,40 @@ public class Game {
 				scanner.next();
 			}
 		} while (!correctNumberOfPlayers);
+	}
+
+	public void confirmNumberOfPlayers() {
+		String confirm;
+		do {
+			try {
+				confirm = scanner.next();
+
+				switch (confirm) {
+				case "Y":
+					correctNumberOfPlayers = true;
+					confirmed = true;
+					requestPlayerNames(numberOfPlayers);
+					break;
+				case "y":
+					correctNumberOfPlayers = true;
+					confirmed = true;
+					requestPlayerNames(numberOfPlayers);
+					break;
+				case "N":
+					requestNumberOfPlayers();
+					break;
+				case "n":
+					requestNumberOfPlayers();
+					break;
+				default:
+					System.out.println(
+							"Sorry, that's not a valid response! Type Y for yes or N for no and press return.");
+					break;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Oops, that doesn't seem right. Please type Y for yes or N for no and press return!");
+			}
+		} while (!confirmed);
 	}
 
 	/**
