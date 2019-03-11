@@ -473,6 +473,7 @@ public class Game {
 							case "y":
 								if (currentPlayer.getOwnedSquares().size() == 0) {
 									System.out.println("Looks like you don't have any businesses left to sell!");
+									confirmSellBusiness = true;
 									doneSellProperty = true;
 									break;
 								}
