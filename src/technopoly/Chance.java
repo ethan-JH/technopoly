@@ -59,8 +59,9 @@ public class Chance extends Square {
 		
 		switch (chanceCardNumber) {
 			case 0:
-				setChanceResponse("Advance payment! You have been moved directly to Funding Round and will collect 200 Techcoins");
-				player.setPosition(1); // to be set to GO square position
+				setChanceResponse("Advance payment! You have been moved directly to Funding Round and will collect 100 Techcoins");
+				player.setPosition(1);
+				updateResource(100, player);
 				break;
 			case 1:
 				setChanceResponse("Your new app is a bestseller! You have collected 50 Techcoins");

@@ -6,14 +6,19 @@ import java.util.Scanner;
 
 public class Retail extends Company {
 	
+	// instance vars
 	private int officeCost;
 	private int campusCost;
 	private int subscription;
-
-
+	
+	/**
+	 * default constructor
+	 */
 	public Retail(){
 
-	}	/**
+	}
+	
+	/**
 	 *
 	 * @param name
 	 * @param position
@@ -27,15 +32,15 @@ public class Retail extends Company {
 	 * @param officeCost
 	 * @param subscription
 	 */
-
 	public Retail(String name, int position, int value, String field, int squareOwnership, int numberOfOffices,
-			int numberOfCampuses, boolean hasCampus, int campusCost, int officeCost, int subscription) {
+			int numberOfCampuses, boolean hasCampus, int officeCost, int campusCost, int subscription) {
 		super(name, position, value, field, squareOwnership, numberOfOffices, numberOfCampuses, hasCampus);
 		this.officeCost = officeCost;
 		this.campusCost = campusCost;
 		this.subscription = subscription;
 	}
-
+	
+	
 	public int getOfficeCost() {
 		return officeCost;
 	}
@@ -59,25 +64,24 @@ public class Retail extends Company {
 	public void setSubscription(int subscription) {
 		this.subscription = subscription;
 	}
-
+	
+	
 	/**
 	 * sends details to player
 	 */
 	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
 		System.out.println(player.getName() + " has landed on " + getName() + " it is a " + getField()
-				+ " company and costs " + getValue() + " Techcoins.");
+				+ " company and costs " + getValue());
 
 		if (getSquareOwnership() == player.getPlayerNumber()) { // check if player already owns square
 			System.out.println("You already own " + this.getName() + ", no subscription required");
-		} else if (getSquareOwnership() != 0 && getSquareOwnership() != player.getPlayerNumber()) { // check if other
-																									// player owns
-																									// square
-			System.out.println(getName() + " is owned by Player " + getSquareOwnership() + ". There are "
-					+ getNumberOfOffices() + " Offices and " + getNumberOfCampuses()
-					+ " Campuses. Pay the owner a subscription of " + getSubscription() + " Techcoin.");
-
+		} else if (getSquareOwnership() != 0 && getSquareOwnership() != player.getPlayerNumber()) { 
+			// checks if other player owns square
 			for (Player owner : playerList) {
 				if (getSquareOwnership() == owner.getPlayerNumber()) {
+					System.out.println(getName() + " is owned by " + owner.getName() + ". There are "
+							+ getNumberOfOffices() + " Offices and " + getNumberOfCampuses()
+							+ " Campuses. Pay the owner a subscription of " + getSubscription() + " Techcoin.");
 					updateResource(-getSubscription(), player);
 					updateResource(getSubscription(), owner);
 
@@ -85,8 +89,8 @@ public class Retail extends Company {
 							+ owner.getName() + " now has " + owner.getResource() + " Techcoin.");
 				}
 			}
-		} else if (getSquareOwnership() == 0 && player.getResource() >= getValue()) { // check if player has enough to
-																						// buy square
+		} else if (getSquareOwnership() == 0 && player.getResource() >= getValue()) { 
+			// if square is unowned check if player has enough to buy square
 			buyCompany(player, scanner);
 		} else { // player does not have enough to buy square
 			System.out.println("Sorry you don't have enough to buy this square, you only have " + player.getResource()
@@ -140,6 +144,9 @@ public class Retail extends Company {
 		String confirm;
 		boolean doneBuyCompany = false;
 		Board board = new Board();
+		ArrayList<Square> newProperty = new ArrayList<>();
+		ArrayList<Company> newCompany = new ArrayList<>();
+		
 		do {
 			System.out.println(getName() + " is available for purchase for " + getValue() + " Techcoin");
 			System.out.println("Would you like to purchase " + getName() + "? (Y/N)");
@@ -150,10 +157,22 @@ public class Retail extends Company {
 					updateResource(-getValue(), player);
 					setSquareOwnership(player.getPlayerNumber());
 					updateRetailOwned(player);
+					
 					//add to player owned properties array
 					for(Square square: board.getSquares()){
 						if(square.getName().equals(this.getName())){
-							player.getOwnedSquares().add(square);
+							newProperty = player.getOwnedSquares();
+							newProperty.add(square);
+							player.setOwnedSquares(newProperty);
+						}
+					}
+					
+					// add to player owned companies array
+					for(Company company : board.getCompanies()) {
+						if(company.getName().equals(this.getName())){
+							newCompany = player.getOwnedCompanies();
+							newCompany.add(company);
+							player.setOwnedCompanies(newCompany);
 						}
 					}
 					System.out.println(getName() + " is now owned by " + player.getName() + ". You now have "

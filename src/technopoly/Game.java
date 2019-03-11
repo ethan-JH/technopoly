@@ -25,13 +25,8 @@ public class Game {
 	private Player currentPlayer;
 	private Board board = new Board();
 	private Square currentSquare;
-	private StreamingService streamingService = new StreamingService();
-	private Retail retail = new Retail();
-	private SocialMedia socialMedia = new SocialMedia();
-	private TechGiant techGiant = new TechGiant();
 
 
-	
 	/**
 	 * default constructor
 	 */
@@ -278,7 +273,7 @@ public class Game {
 			if (i <= 2) {
 				System.out.print(playerList.get(i).getName() + ", ");
 			} else {
-				System.out.print("and" + playerList.get(i).getName());
+				System.out.print("and " + playerList.get(i).getName());
 			}
 		}
 		System.out.print("...to Technopoly!! \n\n");
@@ -333,7 +328,7 @@ public class Game {
 					currentPlayer.displayResources();
 					break;
 				case 5:
-					board.displayBoard(currentPlayer);
+					board.displayBoard(playerList);
 					break;
 				case 6:
 					endGame();
@@ -493,9 +488,10 @@ public class Game {
 			player.setPosition(player.getPosition() + movement);
 		} else {
 			player.setPosition((player.getPosition() + movement) - 20);
-			int passGoResource = player.getResource() + 200;
+			// adds 100 techcoin if player passes go
+			int passGoResource = player.getResource() + GO.GO_BONUS;
 			player.setResource(passGoResource);
-			System.out.println("You have passed the investment round and will collect 200 Techcoin");
+			System.out.println("You have passed the investment round and will collect 100 Techcoin");
 		}
 	}
 
@@ -549,23 +545,23 @@ public class Game {
 					
 					if(currentPlayer.getNumberOfStreamingServiceOwned() == 2 && (company.equalsIgnoreCase("Netflix") || 
 							company.equalsIgnoreCase("Hulu"))) {
-						officeCost = streamingService.getOfficeCost();
-						campusCost = streamingService.getCampusCost();
+						officeCost = 40;
+						campusCost = 40;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfRetailOwned() == 3 && (company.equalsIgnoreCase("Ebay") || 
 							company.equalsIgnoreCase("Alibaba") || company.equalsIgnoreCase("Amazon"))) {
-						officeCost = retail.getOfficeCost();
-						campusCost = retail.getCampusCost();
+						officeCost = 105;
+						campusCost = 105;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfSocialMediaOwned() == 3 && (company.equalsIgnoreCase("Twitter") || 
 							company.equalsIgnoreCase("Instagram") || company.equalsIgnoreCase("Facebook"))) {
-						officeCost = socialMedia.getOfficeCost();
-						campusCost = socialMedia.getCampusCost();
+						officeCost = 195;
+						campusCost = 195;
 						buildCompany(company, officeCost, campusCost);
 					} else if (currentPlayer.getNumberOfTechGiantOwned() == 2 && (company.equalsIgnoreCase("Apple") || 
 							company.equalsIgnoreCase("Microsoft"))) {
-						officeCost = techGiant.getOfficeCost();
-						campusCost = techGiant.getCampusCost();
+						officeCost = 300;
+						campusCost = 300;
 						buildCompany(company, officeCost, campusCost);
 					} else if (company.equalsIgnoreCase("back")) {
 						doneGrowBusiness = true;
@@ -600,7 +596,7 @@ public class Game {
 						System.out.println("An office on " + company + " costs " + officeCost + " Techcoin");
 						System.out.println("A campus on " + company + " costs " + campusCost + " Techcoin");
 						System.out.println("Enter 'office' for office, 'campus' for campus, or 'back' to go back : ");
-						buildType = scanner.nextLine();
+						buildType = scanner.next();
 						
 						if(buildType.equalsIgnoreCase("office")) {
 							if(currentPlayer.getOwnedCompanies().get(loop).getNumberOfOffices() < 4) {
@@ -612,6 +608,7 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).updateResource(-officeCost, currentPlayer);
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(newNumberOfOffices, 0);
 									System.out.println("You now have " + currentPlayer.getOwnedCompanies().get(loop).getNumberOfOffices() + "/4 offices at " + company);
+									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
 								}
 								
 							} else {
@@ -628,6 +625,7 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).updateResource(-campusCost, currentPlayer);
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(4, campusNumber);
 									System.out.println("You now have a campus on " + company + "! You can't build anymore on this company.");
+									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
 								}
 							} else if(currentPlayer.getOwnedCompanies().get(loop).isHasCampus()){
 								System.out.println("You already have a campus on " + company + "! You can't build anymore on this company.");
@@ -673,6 +671,8 @@ public class Game {
 	 * then changes currentPlayer to next player in arrayList
 	 */
 	public void endTurn() {
+		
+		board.multiplyUtilitySubscriptions(currentPlayer);
 		
 		for(Player player : playerList) {
 			if(player.getResource() <= 0) {

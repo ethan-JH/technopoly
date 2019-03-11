@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class GO extends Square{
 	
 	// static variable which holds the bonus value when passing GO
-	public final static int GO_BONUS = 200;
+	public final static int GO_BONUS = 100;
 	
 	/**
 	 * default constructor
@@ -36,9 +36,8 @@ public class GO extends Square{
 	/**
 	 * sends the details of the GO square to the player
 	 */
-	@Override
 	public void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner) {
-		System.out.println("You've made it to the Funding Round, investors have decided to give you another 200 Techcoins after passing this point.");
+		System.out.println("You've made it to the Funding Round, investors have decided to give you another 100 Techcoins after passing this point.");
 	}
 
 }
