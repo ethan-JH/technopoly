@@ -32,7 +32,6 @@ public class SocialMedia extends Company {
 	 * @param value
 	 * @param field
 	 * @param squareOwnership
-	 * @param numberOfHouses
 	 * @param numberOfCampuses
 	 * @param hasCampus
 	 * @param officeCost 

@@ -17,7 +17,7 @@ public class Board {
     private ArrayList<Company> companies = new ArrayList<Company>();
     
     // instantiate squares
- 	private GO fundingRound = new GO("Funding Round", 1, 100, "GO");
+ 	private Investment fundingRound = new Investment("Funding Round", 1, 100, "Investment");
  	private StreamingService netflix = new StreamingService("Netflix", 2, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);
  	private Utility mine1 = new Utility("Techcoin Mine", 3, 150, "Utility", 0, 30); 
  	private StreamingService hulu = new StreamingService("Hulu", 4, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);

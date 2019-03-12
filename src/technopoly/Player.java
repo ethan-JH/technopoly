@@ -253,7 +253,6 @@ public class Player {
 
 	/**
 	 * displays all of the resources owned by the player
-	 * @param Resource
 	 */
 	public void displayResources() {
 		
