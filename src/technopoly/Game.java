@@ -390,7 +390,7 @@ public class Game {
 					// checks player owns the business they've named
 					for (int i = 0; i < currentPlayer.getOwnedSquares().size(); i++) {
 						if (currentPlayer.getOwnedSquares().get(i).getName().equalsIgnoreCase(companySelect)) {
-							doneSellCompany = confirmSellBusiness(doneSellCompany, i);
+							doneSellCompany = confirmSellCompany(doneSellCompany, i);
 							// allows player to go back if they type 'back'
 						} else if (companySelect.equalsIgnoreCase("back")) {
 							doneSellCompany = true;
@@ -413,12 +413,12 @@ public class Game {
 	 * is called within sell business, further logic to confirm the player is done
 	 * selling
 	 * 
-	 * @param doneSellProperty loop control from outer loop
+	 * @param doneSellCompany loop control from outer loop
 	 * @param i iteration of namecheck in player's ownedSquares
 	 * @return returns loop condition to break outer loop
 	 */
-	private boolean confirmSellBusiness(boolean doneSellProperty, int i) {
-		boolean confirmSellBusiness = false;
+	private boolean confirmSellCompany(boolean doneSellCompany, int i) {
+		boolean confirmSellCompany = false;
 		String confirm;
 		do {
 			System.out.println("Are you sure you would like to sell " + currentPlayer.getOwnedSquares().get(i).getName()
@@ -450,18 +450,18 @@ public class Game {
 							case "y":
 								if (currentPlayer.getOwnedSquares().size() == 0) {
 									System.out.println("Looks like you don't have any businesses left to sell!");
-									confirmSellBusiness = true;
-									doneSellProperty = true;
+									confirmSellCompany = true;
+									doneSellCompany = true;
 									break;
 								}
 								System.out.println(
 										"Type the name of the business you would like to sell, or type 'back' to go back.");
-								confirmSellBusiness = true;
+								confirmSellCompany = true;
 								break;
 							case "N":
 							case "n":
-								doneSellProperty = true;
-								confirmSellBusiness = true;
+								doneSellCompany = true;
+								confirmSellCompany = true;
 								break;
 							default:
 								System.out
@@ -479,7 +479,7 @@ public class Game {
 					System.out.println("Alright, let's go back!");
 					System.out.println(
 							"Type the name of the business you would like to sell, or type 'back' to go back.");
-					confirmSellBusiness = true;
+					confirmSellCompany = true;
 					break;
 				default:
 					System.out.println("Sorry, that wasn't a valid input. Please type Y for yes or N for no.");
@@ -489,8 +489,8 @@ public class Game {
 			} catch (InputMismatchException e) {
 				System.out.println("Sorry, that wasn't a valid input. Please type Y for yes or N for no.");
 			}
-		} while (!confirmSellBusiness);
-		return doneSellProperty;
+		} while (!confirmSellCompany);
+		return doneSellCompany;
 	}
 
 
