@@ -347,7 +347,7 @@ public class Game {
 					break;
 				default:
 					System.out.println("Sorry, " + response
-							+ " does not match a menu item! Please type a number between 1 and 8 (inclusive)!");
+							+ " does not match a menu item! Please type a number between 1 and 6 (inclusive)!");
 					break;
 				}
 			} catch (InputMismatchException e) {
@@ -452,6 +452,45 @@ public class Game {
 								+ " and now have " + currentPlayer.getResource());
 						currentPlayer.getOwnedSquares().remove(companyToSell);
 						square.setSquareOwnership(0);
+						
+						if(square.getName().equalsIgnoreCase("Netflix") 
+								|| square.getName().equalsIgnoreCase("Hulu")) {
+							
+							int numberStreamingOwned = currentPlayer.getNumberOfStreamingServiceOwned() - 1;
+							currentPlayer.setNumberOfStreamingServiceOwned(numberStreamingOwned);
+							
+							
+						} else if (square.getName().equalsIgnoreCase("Ebay") 
+								|| square.getName().equalsIgnoreCase("Alibaba") 
+								|| square.getName().equalsIgnoreCase("Amazon")) {
+							
+							int numberRetailOwned = currentPlayer.getNumberOfRetailOwned() - 1;
+							currentPlayer.setNumberOfRetailOwned(numberRetailOwned);
+							
+							
+						} else if (square.getName().equalsIgnoreCase("Twitter") 
+								|| square.getName().equalsIgnoreCase("Instagram") 
+								|| square.getName().equalsIgnoreCase("Facebook")) {
+							
+							int numberSocialOwned = currentPlayer.getNumberOfSocialMediaOwned() - 1;
+							currentPlayer.setNumberOfSocialMediaOwned(numberSocialOwned);
+							
+							
+						} else if (square.getName().equalsIgnoreCase("Apple") 
+								|| square.getName().equalsIgnoreCase("Microsoft")) {
+							
+							int numberTechGiantOwned = currentPlayer.getNumberOfTechGiantOwned() - 1;
+							currentPlayer.setNumberOfTechGiantOwned(numberTechGiantOwned);
+							
+						} else if (square.getName().equalsIgnoreCase("Data-Centre")
+								|| square.getName().equalsIgnoreCase("Techcoin-Mine")) {
+							
+							int numberUtilityOwned = currentPlayer.getNumberOfUtilitiesOwned() - 1;
+							currentPlayer.setNumberOfUtilitiesOwned(numberUtilityOwned);
+							
+							
+						} 
+						
 						System.out.println("Would you like to sell another business? (Y/N)");
 						try {
 							confirm = scanner.next();

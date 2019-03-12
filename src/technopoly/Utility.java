@@ -76,11 +76,11 @@ public class Utility extends Square {
 			System.out.println("You already own this " + getName() + ", no subscription required");
 		} else if (getSquareOwnership() != 0 && getSquareOwnership() != player.getPlayerNumber()) {
 
-			System.out.println("This " + getName() + " is owned by Player " + getSquareOwnership()
-					+ ". Pay them a subscription of " + getSubscription() + " Techcoin");
-
 			for (Player owner : playerList) {
 				if (getSquareOwnership() == owner.getPlayerNumber()) {
+					
+					System.out.println("This " + getName() + " is owned by " + owner.getName()
+					+ ". Pay them a subscription of " + getSubscription() + " Techcoin");
 					updateResource(-getSubscription(), player);
 					updateResource(getSubscription(), owner);
 
