@@ -219,9 +219,11 @@ public class Game {
 		String confirm;
 		boolean nameConfirmed;
 		boolean nameInputCorrect;
+		boolean makePlayer;
 		for (int loop = 1; loop <= numberOfPlayers; loop++) {
 			nameConfirmed = false;
 			nameInputCorrect = false;
+			makePlayer = false;
 			System.out.println("Player " + (loop) + " please enter your first name!");
 			do {
 				try {
@@ -242,6 +244,7 @@ public class Game {
 							case "y":
 								nameInputCorrect = true;
 								nameConfirmed = true;
+								makePlayer = true;
 								break;
 							case "N":
 							case "n":
@@ -263,7 +266,11 @@ public class Game {
 					System.out.println("Sorry, please input your name (it cannot be a number!)");
 					scanner.next();
 				}
-				playerList.add(new Player(1, name, loop, 1500, 0, 0, 0, 0, 0));
+				
+				if(makePlayer) {
+					playerList.add(new Player(1, name, loop, 1500, 0, 0, 0, 0, 0));
+				}
+				
 			} while (!nameConfirmed);
 
 		}
