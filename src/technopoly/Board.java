@@ -19,23 +19,23 @@ public class Board {
     // instantiate squares
  	private Investment fundingRound = new Investment("Funding Round", 1, 100, "Investment");
  	private StreamingService netflix = new StreamingService("Netflix", 2, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);
- 	private Utility mine1 = new Utility("Techcoin Mine", 3, 150, "Utility", 0, 30); 
+ 	private Utility mine1 = new Utility("Techcoin-Mine", 3, 150, "Utility", 0, 30); 
  	private StreamingService hulu = new StreamingService("Hulu", 4, 60, "Streaming Service", 0, 0, 0, false, 40, 40, 12);
- 	private Tax digitalTax = new Tax("Digital Tax", 5, 200, "Tax");
+ 	private Tax hacked1 = new Tax("Hacked", 5, 200, "Tax");
  	private Chance chance1 = new Chance("Chance", 6, 0, "Chance", "Chance");
  	private Retail ebay = new Retail("Ebay", 7, 140, "Retail", 0, 0, 0, false, 105, 105, 28);
- 	private Utility dataCentre1 = new Utility("Data Centre", 8, 150, "Utility", 0, 30);
+ 	private Utility dataCentre1 = new Utility("Data-Centre", 8, 150, "Utility", 0, 30);
  	private Retail alibaba = new Retail("Alibaba", 9, 140, "Retail", 0, 0, 0, false, 105, 105, 28);
  	private Retail amazon = new Retail("Amazon", 10, 160, "Retail", 0, 0, 0, false, 105, 105, 32);
  	private Holiday holiday = new Holiday("Holiday", 11, 0, "Holiday");
  	private SocialMedia twitter = new SocialMedia("Twitter", 12, 260, "Social Media", 0, 0, 0, false, 195, 195, 52);
  	private SocialMedia instagram = new SocialMedia("Instagram", 13, 260, "Social Media", 0, 0, 0, false, 195, 195, 52);
- 	private Utility mine2 = new Utility("Techcoin Mine", 14, 150, "Utility", 0, 30);
+ 	private Utility mine2 = new Utility("Techcoin-Mine", 14, 150, "Utility", 0, 30);
  	private SocialMedia facebook = new SocialMedia("Facebook", 15, 280, "Social Media", 0, 0, 0, false, 195, 195, 56);
  	private Chance chance2 = new Chance("Chance", 16, 0, "Chance", "Chance");
- 	private Tax hacked = new Tax("Hacked", 17, 100, "Hacked");
+ 	private Tax hacked2 = new Tax("Hacked", 17, 100, "Tax");
  	private TechGiant apple = new TechGiant("Apple", 18, 350, "Tech Giant", 0, 0, 0, false, 300, 300, 70);
- 	private Utility dataCentre2 = new Utility("Data Centre", 19, 150, "Utility", 0, 30);
+ 	private Utility dataCentre2 = new Utility("Data-Centre", 19, 150, "Utility", 0, 30);
  	private TechGiant microsoft = new TechGiant("Microsoft", 20, 400, "Tech Giant", 0, 0, 0, false, 300, 300, 80);
     
     /**
@@ -48,7 +48,7 @@ public class Board {
     	squares.add(netflix);
     	squares.add(mine1);
     	squares.add(hulu);
-    	squares.add(digitalTax);
+    	squares.add(hacked1);
     	squares.add(chance1);
     	squares.add(ebay);
     	squares.add(dataCentre1);
@@ -60,7 +60,7 @@ public class Board {
     	squares.add(mine2);
     	squares.add(facebook);
     	squares.add(chance2);
-    	squares.add(hacked);
+    	squares.add(hacked2);
     	squares.add(apple);
     	squares.add(dataCentre2);
     	squares.add(microsoft);

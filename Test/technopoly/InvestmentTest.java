@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class GOTest {
+public class InvestmentTest {
 	String name = "name";
 	int position = 1;
 	int value = 0;
 	String field = "field";
-	GO g = new GO();
-	GO go = new GO(name, position, value, field);
+	Investment invest = new Investment();
+	Investment investment = new Investment(name, position, value, field);
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,11 +27,11 @@ public class GOTest {
 
 	@Test
 	public void testGODefaultConstructor() {
-		assertNotNull(g);
+		assertNotNull(invest);
 	}
 	@Test
 	public void testGOConstructorWithArgs() {
-		assertNotNull(go);
+		assertNotNull(investment);
 	}
 
 }

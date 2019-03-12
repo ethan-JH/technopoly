@@ -152,8 +152,6 @@ public class Game {
 	 * requests the number of players, loops until this is confirmed
 	 */
 	private void requestNumberOfPlayers() {
-		
-		String confirm;
 
 		System.out.println("How many people are playing? Choose 2, 3 ,4 or 5!");
 		do {
@@ -380,6 +378,8 @@ public class Game {
 		boolean doneSellCompany = false;
 
 		String companySelect;
+		Square companyToSell = null;
+		boolean companyOwned = false;
 		currentPlayer.displayOwnedSquares();
 		if (currentPlayer.getOwnedSquares().size() > 0) {
 
@@ -390,16 +390,19 @@ public class Game {
 					// checks player owns the business they've named
 					for (int i = 0; i < currentPlayer.getOwnedSquares().size(); i++) {
 						if (currentPlayer.getOwnedSquares().get(i).getName().equalsIgnoreCase(companySelect)) {
-							doneSellCompany = confirmSellCompany(doneSellCompany, i);
-							// allows player to go back if they type 'back'
+							companyToSell = currentPlayer.getOwnedSquares().get(i);
+							companyOwned = true;
 						} else if (companySelect.equalsIgnoreCase("back")) {
 							doneSellCompany = true;
-						} else {
-							System.out.println(
-									"Sorry, that wasn't a valid input. Please type the name of a property you would like to sell and press return, or type 'back' to go back.");
-						}
+						} 
 					}
-
+					
+					if(companyOwned == true) {
+						doneSellCompany = confirmSellCompany(doneSellCompany, companyToSell);
+					} else if(companyOwned == false & doneSellCompany == false) {
+						System.out.println("You must enter the name of a company you own.");
+					}
+					
 				} catch (InputMismatchException e) {
 					System.out.println(
 							"Sorry, that's not a property you own! Try again, or alternatively type 'back' to go back.");
@@ -417,11 +420,11 @@ public class Game {
 	 * @param i iteration of namecheck in player's ownedSquares
 	 * @return returns loop condition to break outer loop
 	 */
-	private boolean confirmSellCompany(boolean doneSellCompany, int i) {
+	private boolean confirmSellCompany(boolean doneSellCompany, Square companyToSell) {
 		boolean confirmSellCompany = false;
 		String confirm;
 		do {
-			System.out.println("Are you sure you would like to sell " + currentPlayer.getOwnedSquares().get(i).getName()
+			System.out.println("Are you sure you would like to sell " + companyToSell.getName()
 					+ "(Y/N)?");
 			try {
 				confirm = scanner.next();
@@ -431,16 +434,16 @@ public class Game {
 					Square square = null;
 					for (int j = 0; j < board.getSquares().size(); j++) {
 
-						if (currentPlayer.getOwnedSquares().get(i).getName()
+						if (companyToSell.getName()
 								.equals(board.getSquares().get(j).getName())) {
 							square = board.getSquares().get(j);
 						}
 					}
-					if (currentPlayer.getOwnedSquares().get(i).getName().equals(square.getName())) {
+					if (companyToSell.getName().equals(square.getName())) {
 						currentPlayer.setResource(currentPlayer.getResource() + (square.getValue()/2));
 						System.out.println("You have sold " + square.getName() + " for " + (square.getValue()/2)
 								+ " and now have " + currentPlayer.getResource());
-						currentPlayer.getOwnedSquares().remove(i);
+						currentPlayer.getOwnedSquares().remove(companyToSell);
 						square.setSquareOwnership(0);
 						System.out.println("Would you like to sell another business? (Y/N)");
 						try {
