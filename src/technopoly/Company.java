@@ -11,32 +11,39 @@ import java.util.Scanner;
  *
  */
 public abstract class Company extends Square {
+	
+	// instance vars
 	private int squareOwnership;
 	private int numberOfOffices;
-	private int numberOfCampuses; 
-	private boolean hasCampus; 
+	private int numberOfCampuses;
+	private boolean hasCampus;
 	
+	/**
+	 * default constructor
+	 */
 	public Company() {
-		
+
 	}
 
 	/**
+	 * constructor with args
 	 * @param name
 	 * @param position
 	 * @param value
 	 * @param field
-	 * @param squareOwnership 
-	 * @param numberOfOffices 
-	 * @param numberOfCampuses 
-	 * @param hasCampus 
+	 * @param squareOwnership
+	 * @param numberOfOffices
+	 * @param numberOfCampuses
+	 * @param hasCampus
 	 */
-	
-	public Company(String name, int position, int value,  String field, int squareOwnership, int numberOfOffices, int numberOfCampuses, boolean hasCampus) {
+
+	public Company(String name, int position, int value, String field, int squareOwnership, int numberOfOffices,
+			int numberOfCampuses, boolean hasCampus) {
 		super(name, position, value, field);
-		this.squareOwnership=squareOwnership;
-		this.numberOfOffices=numberOfOffices;
-		this.numberOfCampuses=numberOfCampuses;
-		this.hasCampus=hasCampus;
+		this.squareOwnership = squareOwnership;
+		this.numberOfOffices = numberOfOffices;
+		this.numberOfCampuses = numberOfCampuses;
+		this.hasCampus = hasCampus;
 	}
 
 	public int getSquareOwnership() {
@@ -70,9 +77,9 @@ public abstract class Company extends Square {
 	public void setHasCampus(boolean hasCampus) {
 		this.hasCampus = hasCampus;
 	}
+
 	public abstract int addSubscription(int numberOfOffices, int numberOfCampuses);
-	
+
 	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner);
-	
 
 }
