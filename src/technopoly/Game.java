@@ -437,8 +437,8 @@ public class Game {
 						}
 					}
 					if (currentPlayer.getOwnedSquares().get(i).getName().equals(square.getName())) {
-						currentPlayer.setResource(currentPlayer.getResource() + square.getValue());
-						System.out.println("You have sold " + square.getName() + " for " + square.getValue()
+						currentPlayer.setResource(currentPlayer.getResource() + (square.getValue()/2));
+						System.out.println("You have sold " + square.getName() + " for " + (square.getValue()/2)
 								+ " and now have " + currentPlayer.getResource());
 						currentPlayer.getOwnedSquares().remove(i);
 						square.setSquareOwnership(0);
