@@ -151,7 +151,7 @@ public class Game {
 	/**
 	 * requests the number of players, loops until this is confirmed
 	 */
-	private void requestNumberOfPlayers() {
+	public void requestNumberOfPlayers() {
 
 		System.out.println("How many people are playing? Choose 2, 3 ,4 or 5!");
 		do {
@@ -214,7 +214,7 @@ public class Game {
 	 * 
 	 * @param numberOfPlayers represents the number of players
 	 */
-	private void requestPlayerNames(int numberOfPlayers) {
+	 public void requestPlayerNames(int numberOfPlayers) {
 		String name = null;
 		String confirm;
 		boolean nameConfirmed;
