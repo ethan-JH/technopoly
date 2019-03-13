@@ -89,8 +89,8 @@ public class SocialMedia extends Company {
 							System.out.println(getName() + " is owned by " + owner.getName() + ". There are "
 									+ company.getNumberOfOffices() + " Offices and " + company.getNumberOfCampuses()
 									+ " Campuses. Pay the owner a subscription of " + company.getSubscription() + " Techcoin.");
-							updateResource(-getSubscription(), player);
-							updateResource(getSubscription(), owner);
+							updateResource(-company.getSubscription(), player);
+							updateResource(company.getSubscription(), owner);
 
 							System.out.println(player.getName() + " now has " + player.getResource() + " Techcoin. "
 									+ owner.getName() + " now has " + owner.getResource() + " Techcoin.");
