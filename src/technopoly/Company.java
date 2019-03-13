@@ -17,6 +17,7 @@ public abstract class Company extends Square {
 	private int numberOfOffices;
 	private int numberOfCampuses;
 	private boolean hasCampus;
+	private int subscription;
 	
 	/**
 	 * default constructor
@@ -38,12 +39,13 @@ public abstract class Company extends Square {
 	 */
 
 	public Company(String name, int position, int value, String field, int squareOwnership, int numberOfOffices,
-			int numberOfCampuses, boolean hasCampus) {
+			int numberOfCampuses, boolean hasCampus, int subscription) {
 		super(name, position, value, field);
 		this.squareOwnership = squareOwnership;
 		this.numberOfOffices = numberOfOffices;
 		this.numberOfCampuses = numberOfCampuses;
 		this.hasCampus = hasCampus;
+		this.subscription = subscription;
 	}
 
 	public int getSquareOwnership() {
@@ -81,5 +83,19 @@ public abstract class Company extends Square {
 	public abstract int addSubscription(int numberOfOffices, int numberOfCampuses);
 
 	public abstract void sendSquareDetails(Player player, ArrayList<Player> playerList, Scanner scanner);
+
+	/**
+	 * @return the subscription
+	 */
+	public int getSubscription() {
+		return subscription;
+	}
+
+	/**
+	 * @param subscription the subscription to set
+	 */
+	public void setSubscription(int subscription) {
+		this.subscription = subscription;
+	}
 
 }

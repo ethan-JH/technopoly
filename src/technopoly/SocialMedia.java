@@ -40,10 +40,9 @@ public class SocialMedia extends Company {
 	 */
 	public SocialMedia(String name, int position, int value, String field, int squareOwnership, int numberOfOffices,
 			int numberOfCampuses, boolean hasCampus, int officeCost, int campusCost, int subscription) {
-		super(name, position, value, field, squareOwnership, numberOfOffices, numberOfCampuses, hasCampus);
+		super(name, position, value, field, squareOwnership, numberOfOffices, numberOfCampuses, hasCampus, subscription);
 		this.officeCost = officeCost;
 		this.campusCost = campusCost;
-		this.subscription = subscription;
 	}
 	
 	
@@ -85,14 +84,19 @@ public class SocialMedia extends Company {
 			// checks if other player owns square
 			for (Player owner : playerList) {
 				if (getSquareOwnership() == owner.getPlayerNumber()) {
-					System.out.println(getName() + " is owned by " + owner.getName() + ". There are "
-							+ getNumberOfOffices() + " Offices and " + getNumberOfCampuses()
-							+ " Campuses. Pay the owner a subscription of " + getSubscription() + " Techcoin.");
-					updateResource(-getSubscription(), player);
-					updateResource(getSubscription(), owner);
+					for(Company company : owner.getOwnedCompanies()) {
+						if(company.getName().equalsIgnoreCase(getName())) {
+							System.out.println(getName() + " is owned by " + owner.getName() + ". There are "
+									+ company.getNumberOfOffices() + " Offices and " + company.getNumberOfCampuses()
+									+ " Campuses. Pay the owner a subscription of " + company.getSubscription() + " Techcoin.");
+							updateResource(-getSubscription(), player);
+							updateResource(getSubscription(), owner);
 
-					System.out.println(player.getName() + " now has " + player.getResource() + " Techcoin. "
-							+ owner.getName() + " now has " + owner.getResource() + " Techcoin.");
+							System.out.println(player.getName() + " now has " + player.getResource() + " Techcoin. "
+									+ owner.getName() + " now has " + owner.getResource() + " Techcoin.");
+						}
+					}
+					
 				}
 			}
 		} else if (getSquareOwnership() == 0 && player.getResource() >= getValue()) { 
