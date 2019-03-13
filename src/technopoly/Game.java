@@ -652,7 +652,6 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(newNumberOfOffices, 0);
 									System.out.println("You now have " + currentPlayer.getOwnedCompanies().get(loop).getNumberOfOffices() + "/4 offices at " + company);
 									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
-									doneBuildCompany =true;
 								}
 								
 							} else {
@@ -670,7 +669,6 @@ public class Game {
 									currentPlayer.getOwnedCompanies().get(loop).addSubscription(4, campusNumber);
 									System.out.println("You now have a campus on " + company + "! You can't build anymore on this company.");
 									System.out.println("You now have " + currentPlayer.getResource() + " Techcoins.");
-									doneBuildCompany = true;
 								}
 							} else if(currentPlayer.getOwnedCompanies().get(loop).isHasCampus()){
 								System.out.println("You already have a campus on " + company + "! You can't build anymore on this company.");
@@ -680,12 +678,15 @@ public class Game {
 							
 						} else if(buildType.equalsIgnoreCase("back")) {
 							doneBuildCompany = true;
-						} 
+						} else {
+							System.out.println("That is not a valid input, please enter 'office' for office, 'campus' for campus, or 'cancel' to go back");
+						}
 						
 					} catch (InputMismatchException e) {
 						System.out.println("That is not a valid input, please enter 'office' for office, 'campus' for campus, or 'cancel' to go back");
 					}
 				} while (!doneBuildCompany);
+				System.out.println();
 			}
 			
 		}
