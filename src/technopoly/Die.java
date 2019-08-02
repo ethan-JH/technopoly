@@ -8,7 +8,7 @@ import java.util.Random;
 
 
 /**
- * @author Luke
+ * @author Ethan
  * class to hold die object which rolls a random number between 1 and 6
  */
 public class Die {
