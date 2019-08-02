@@ -6,7 +6,7 @@ package technopoly;
 import java.util.ArrayList;
 
 /**
- * @author Luke
+ * @author Ethan
  * class to hold board which contains an ArrayList of the Squares used in the game
  */
 public class Board {
