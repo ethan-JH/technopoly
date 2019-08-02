@@ -4,7 +4,7 @@
 package technopoly;
 
 /**
- * @author hugoharbinson
+ * @author Ethan
  *
  */
 public class Campus {
