@@ -8,7 +8,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * @author Ethan Utility class which holds all the details for this square
+ * @author Ethan 
+ * Utility class which holds all the details for this square
  */
 public class Utility extends Square {
 
