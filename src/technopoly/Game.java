@@ -1,4 +1,4 @@
-/**@author Luke, James, Hugo, Ethan, Chris
+/**@author Ethan
  * Package containing the Technopoly classes
  */
 package technopoly;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * @author Luke
+ * @author Ethan
  * class which contains game details and methods and main method for playing game
  */
 public class Game {
