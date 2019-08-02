@@ -6,7 +6,7 @@ package technopoly;
 import java.util.ArrayList;
 
 /**
- * @author Luke
+ * @author Ethan
  *	Player class which holds all variables and methods for someone playing the game
  */
 public class Player {
