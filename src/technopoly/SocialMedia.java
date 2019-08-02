@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * @author jmac
+ * @author Ethan
  *
  */
 public class SocialMedia extends Company {
