@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author jmac
+ * @author Ethan
  *
  */
 public abstract class Company extends Square {
