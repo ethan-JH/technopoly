@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * @author Ethan
+ *
+ */
 public class Retail extends Company {
 	
 	// instance vars
